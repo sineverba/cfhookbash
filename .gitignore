@@ -1,0 +1,10 @@
+# Ignore everything
+*
+
+# But not these files...
+!README.md
+!.gitignore
+!LICENSE
+!hook.txt
+!delete_txt.txt
+!cronjob.sh
