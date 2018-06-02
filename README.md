@@ -25,7 +25,7 @@ git clone https://github.com/lukas2511/dehydrated
 cd dehydrated
 mkdir hooks
 cd hooks
-git clone https://github.com/cfdehydrathedbash/cfhookbash.git
+git clone https://github.com/sineverba/cfhookbash.git
 ```
 
 
