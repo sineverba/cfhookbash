@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+key_value=$(grep -Po '"id":.*?[^\\]"' hooks/cfhookbash/id.txt)
+#Remove first 6 occurence
+id="${key_value:6}"
+#Remove last char
+id="${id::-1}"
+
+zones="YOUR_ZONES"
+email="YOUR_EMAIL"
+auth_key="YOUR_AUTH_KEY"
+
+curl -X DELETE "https://api.cloudflare.com/client/v4/zones/$zones/dns_records/$id" \
+     -H "X-Auth-Email: $email"\
+     -H "X-Auth-Key: $auth_key"\
+     -H "Content-Type: application/json"\
+     > /dev/null

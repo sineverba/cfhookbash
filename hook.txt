@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+set -e
+set -u
+set -o pipefail
+
+zones="YOUR_ZONES"
+email="YOUR_EMAIL"
+auth_key="YOUR_AUTH_KEY"
+prefix="_acme-challenge."
+
+case "$1" in
+    "deploy_challenge")
+        curl -X POST "https://api.cloudflare.com/client/v4/zones/$zones/dns_records"\
+     	-H "X-Auth-Email: $email"\
+     	-H "X-Auth-Key: $auth_key"\
+     	-H "Content-Type: application/json"\
+     	--data '{"type":"TXT","name":"'$prefix$2'","content":"'$4'","ttl":120,"priority":10,"proxied":false}'\
+		-o id.txt
+        ;;
+    "clean_challenge")
+    	hooks/cfhookbash/delete_txt.sh
+        ;;
+    "deploy_cert")
+        ;;
+    "unchanged_cert")
+        ;;
+    "startup_hook")
+        ;;
+    "exit_hook")
+        ;;
+    *)
+        echo Unknown hook "${1}"
+        exit 0
+        ;;
+esac
