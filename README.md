@@ -1,7 +1,5 @@
 # Let's Encrypt Cloudflare bash hook - V 0.1 BETA
 
-Need to test cronjob.
-
 CloudFlare Bash hook for dehydrated.
 
 This is a hook for Let's Encrypt client [dehydrated](https://github.com/lukas2511/dehydrated) to use with Cloud Flare.
@@ -55,13 +53,13 @@ cd ~/dehydrated
 ./dehydrated -c -d www.example.com -t dns-01 -k 'hooks/cfhookbash/hook.sh'
 ```
 
-To run as cronjob, encapsule in a script (e.g. cronjob.sh)
+To run as cronjob specify full paths
 
 ```
 crontab -e
-0 4 * * 1 ./renew_cert.sh
+0 4 * * 1 /home/YOUR_USER/dehydrated/dehydrated -c -d www.example.com -t dns-01 -k '/home/YOUR_USER/dehydrated/hooks/cfhookbash/hook.sh' >> /home/YOUR_USER/cfhookbash.log
 ```
-Execute every monday at 4AM. After the script execution, `delete_txt.sh` is called to delete the DNS.
+Execute every monday at 4AM. After the script execution, `delete_txt.sh` is called to delete the DNS. Create also a log in your home.
 
 ##### Credits
 Inspired by
