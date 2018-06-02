@@ -1,4 +1,6 @@
-# Let's Encrypt Cloudflare bash hook
+# Let's Encrypt Cloudflare bash hook - V 0.1 BETA
+
+Need to test cronjob.
 
 CloudFlare Bash hook for dehydrated.
 
