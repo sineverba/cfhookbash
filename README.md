@@ -4,7 +4,34 @@ CloudFlare Bash hook for dehydrated.
 
 This is a hook for Let's Encrypt client [dehydrated](https://github.com/lukas2511/dehydrated) to use with Cloud Flare.
 
-You can complete the DNS challenges (dns-01).
+## Why Cloud Flare? What is this scrip?
+
+You have all (or some) these problems:
+
++ Your domain registrar doesn't have / dont' want give you API to write automatically new DNS record (for DNS-01 Challenge of Let's Encrypt)
++ Your ISP blocks 80/443 port
++ You cannot open one or both ports (e.g. several routers have management page only on 80 port)
++ Let's Encrypt needs to verify on both (80 and 443) to release / renew certificate
+
+You only need:
+
+1. Register on Cloudflare
+2. Change your DNS to manage them in Cloudflare (follow their guide). This ATM is valid also for free user!
+3. Run `dehydrated` with this hook.
+
+Finish! Stop! End!
+
+This bash hook will:
+
+1. Contact Let's Encrpyt for DNS-01 challenge (no anymore need forwarded port)
+2. Get the record to write in DNS
+3. Call Cloudflare API and write record
+4. Wait for LE answer
+5. Create / renew the certificates
+
+You will have the certificates in the folder of `dehydrated`).
+
+In simple words: you can complete the DNS challenges (dns-01).
 
 ## Development
 Everyone is welcome to contribute!
