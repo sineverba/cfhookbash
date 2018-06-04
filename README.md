@@ -1,7 +1,8 @@
 # Cloud Flare hook bash for dehydrated - DNS-01 Challenge Let's Encrypt
 
-CloudFlare Bash hook for dehydrated.
+## DNS-01 challenge solved for "pratically" every domain, thanks to Cloudflare and their API.
 
+CloudFlare Bash hook for dehydrated.
 This is a hook for Let's Encrypt client [dehydrated](https://github.com/lukas2511/dehydrated) to use with Cloud Flare.
 
 ## Why Cloud Flare? What is this scrip?
