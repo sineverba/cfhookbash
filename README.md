@@ -1,4 +1,4 @@
-# Cloud Flare hook bash for dehydrated - DNS-01 Challenge Let's Encrypt - V 0.1 BETA
+# Cloud Flare hook bash for dehydrated - DNS-01 Challenge Let's Encrypt
 
 CloudFlare Bash hook for dehydrated.
 
