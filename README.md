@@ -86,6 +86,10 @@ cd ~/dehydrated
 ./dehydrated -c -d www.example.com -t dns-01 -k 'hooks/cfhookbash/hook.sh'
 ```
 
+You will find the certificates inside `~/dehydrated/certs/www.example.com` (of course the domain name is your).
+
+## Cronjob (try renew every monday)
+
 To run as cronjob specify full paths
 
 ```
