@@ -58,6 +58,11 @@ git clone https://github.com/sineverba/cfhookbash.git
 
 
 ## Configuration
+
+We need to edit hook.txt and delete.txt . To get values for zones, login to your Cloudflare account, section "DNS" of your domain. Click the link API and you will get some example. Zones is the long string 
+
+`POST https://api.cloudflare.com/client/v4/zones/THIS_IS_ZONES/dns_records`
+
 ```
 cd ~/dehydrated/hooks/cfhookbash
 nano hook.txt
