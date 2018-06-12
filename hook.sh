@@ -1,12 +1,31 @@
 #!/usr/bin/env bash
 
-. /home/$USER/git_projects/cfhookbash/config.sh
+#. /home/$USER/git_projects/cfhookbash/config.sh
 
-# I have current function here
-#echo "${1}"
+# We have current function here
+# echo "${1}"
 
 deploy_challenge() {
     local DOMAIN="${1}" TOKEN_FILENAME="${2}" TOKEN_VALUE="${3}"
+    
+    case
+    
+    	${1} in
+    	"www.example.com")
+    	
+    		token="t0k3n"
+    		echo "$token"
+    		
+    	;;
+    	
+    	"www.example.net")
+    	
+    		token="4n0th3rt0k3n"
+    		echo "$token"
+    		
+    	;;
+    
+    esac
 
     # This hook is called once for every domain that needs to be
     # validated, including any alternative names you may have listed.
