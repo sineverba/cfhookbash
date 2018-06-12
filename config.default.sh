@@ -1,2 +1,6 @@
-www.example.com_token="asdfasdf"
-www.eample.net_token="poiuytre"
+www.example.com_zones="asdfasdf"
+www.example.com_email="info@example.com"
+www.example.com_auth_key="a1b2c3d4"
+www.example.net_zones="9q8w7e8r9t8y7u"
+www.example.net_email="info@example.net"
+www.example.net_auth_key="4f5r4g74g"
