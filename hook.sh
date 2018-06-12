@@ -8,29 +8,11 @@
 deploy_challenge() {
     local DOMAIN="${1}" TOKEN_FILENAME="${2}" TOKEN_VALUE="${3}"
     
-    case
+    . /home/$USER/git_projects/cfhookbash/config.sh
     
-    	${1} in
-    	"www.example.com")
-    	
-    		token="t0k3n"
-    		zones="z0n35"
-    		echo "$token"
-    		echo "$zones"
-    		
-    	;;
-    	
-    	"www.example.net")
-    	
-    		token="4n0th3rt0k3n"
-    		zones="4n0th3rz0n35"
-    		echo "$token"
-    		echo "$zones"
-    		
-    	;;
+    echo "$token"
+	echo "$zones"
     
-    esac
-
     # This hook is called once for every domain that needs to be
     # validated, including any alternative names you may have listed.
     #
