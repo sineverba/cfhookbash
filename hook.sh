@@ -7,9 +7,6 @@
 
 deploy_challenge() {
     local DOMAIN="${1}" TOKEN_FILENAME="${2}" TOKEN_VALUE="${3}"
-	echo ">>> ${1}"
-	source config.txt
-	echo "$www.k2p.it_ACME"
 
     # This hook is called once for every domain that needs to be
     # validated, including any alternative names you may have listed.
@@ -181,8 +178,6 @@ generate_csr() {
 startup_hook() {
   # This hook is called before the cron command to do some initial tasks
   # (e.g. starting a webserver).
-  
-  echo "$www.k2p.it_token"
 
   :
 }
