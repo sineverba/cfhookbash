@@ -5,3 +5,5 @@
 !README.md
 !.gitignore
 !LICENSE
+!hook.sh
+!config.default.sh
