@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-#. /home/$USER/git_projects/cfhookbash/config.sh
-
 # We have current function here
 # echo "${1}"
 
