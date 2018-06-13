@@ -37,6 +37,7 @@ In simple words: you can complete the DNS challenges (dns-01).
 ## Development
 Everyone is welcome to contribute!
 Create a `config` file in same folder of `./dehydrated` and put staging inside, to no hit Let's Encrypt limit.
+**Warning! Use this ONLY during development, not in production!**
 
 ```
 CA="https://acme-staging.api.letsencrypt.org/directory"
@@ -54,24 +55,40 @@ cd dehydrated
 mkdir hooks
 cd hooks
 git clone https://github.com/sineverba/cfhookbash.git
+cd ..
+```
+
+Or, in one line
+
+```
+cd ~ && git clone https://github.com/lukas2511/dehydrated && cd dehydrated && mkdir hooks && cd hooks && git clone https://github.com/sineverba/cfhookbash.git && cd ..
 ```
 
 
 ## Configuration
 
-We need to edit hook.txt and delete.txt . To get values for zones, login to your Cloudflare account, section "DNS" of your domain. Click the link API and you will get some example. Zones is the long string 
+1. Create a file `domains.txt` **in the folder of `dehydrated`**
+2. Put inside a list (one for line) of domain that you want secure.
+
+```
+www.example.com
+home.example.net
+...
+```
+
+3. Move inside `cfhookbash` folder
+4. Copy `config.default.sh` to `config.sh`
+
+```
+cd ~/dehydrated/cfhookbash
+cp config.default.sh config.sh && rm config.default.sh && nano config.sh
+```
+
+We need to edit `config.default.sh`. To get values for zones, login to your Cloudflare account, section "DNS" of your domain. Click the link API and you will get some example. Zones is the long string 
 
 `POST https://api.cloudflare.com/client/v4/zones/THIS_IS_ZONES/dns_records`
 
-```
-cd ~/dehydrated/hooks/cfhookbash
-nano hook.txt
-cp hook.txt hook.sh
-chmod 755 hook.sh
-nano delete_txt.txt
-cp delete_txt.txt delete_txt.sh
-chmod 755 delete_txt.sh
-```
+**`global_api_key` is found under your account**
 
 ## Usage
 
@@ -83,7 +100,7 @@ cd ~/dehydrated
 
 ### Next start
 ```
-./dehydrated -c -d www.example.com -t dns-01 -k 'hooks/cfhookbash/hook.sh'
+./dehydrated -c -t dns-01 -k 'hooks/cfhookbash/hook.sh'
 ```
 
 You will find the certificates inside `~/dehydrated/certs/www.example.com` (of course the domain name is your).
@@ -94,7 +111,7 @@ To run as cronjob specify full paths
 
 ```
 crontab -e
-0 4 * * 1 /home/YOUR_USER/dehydrated/dehydrated -c -d www.example.com -t dns-01 -k '/home/YOUR_USER/dehydrated/hooks/cfhookbash/hook.sh' >> /home/YOUR_USER/cfhookbash.log
+0 4 * * 1 /home/YOUR_USER/dehydrated/dehydrated -c -t dns-01 -k '/home/YOUR_USER/dehydrated/hooks/cfhookbash/hook.sh' >> /home/YOUR_USER/cfhookbash.log
 ```
 Execute every monday at 4AM. After the script execution, `delete_txt.sh` is called to delete the DNS. Create also a log in your home.
 
