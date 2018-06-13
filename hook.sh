@@ -5,14 +5,14 @@ prefix="_acme-challenge."
 deploy_challenge() {
     local DOMAIN="${1}" TOKEN_FILENAME="${2}" TOKEN_VALUE="${3}"
     
-    . /home/$USER/dehydrated/hooks/cfhookbash/config.sh
+    . $PWD/hooks/cfhookbash/config.sh
     
     curl -X POST "https://api.cloudflare.com/client/v4/zones/$zones/dns_records"\
      	-H "X-Auth-Email: $email"\
      	-H "X-Auth-Key: $global_api_key"\
      	-H "Content-Type: application/json"\
      	--data '{"type":"TXT","name":"'$prefix$1'","content":"'$3'","ttl":120,"priority":10,"proxied":false}'\
-		-o "$1".txt
+		-o $PWD/hooks/cfhookbash/"$1".txt
     
     # This hook is called once for every domain that needs to be
     # validated, including any alternative names you may have listed.
@@ -38,9 +38,9 @@ deploy_challenge() {
 clean_challenge() {
     local DOMAIN="${1}" TOKEN_FILENAME="${2}" TOKEN_VALUE="${3}"
     
-    . /home/$USER/dehydrated/hooks/cfhookbash/config.sh
+    . $PWD/hooks/cfhookbash/config.sh
     
-    key_value=$(grep -Po '"id":.*?[^\\]"' $PWD/$1.txt)
+    key_value=$(grep -Po '"id":.*?[^\\]"' $PWD/hooks/cfhookbash/"$1".txt)
 	#Remove first 6 occurence
 	id="${key_value:6}"
 	#Remove last char
@@ -66,7 +66,7 @@ clean_challenge() {
 deploy_cert() {
     local DOMAIN="${1}" KEYFILE="${2}" CERTFILE="${3}" FULLCHAINFILE="${4}" CHAINFILE="${5}" TIMESTAMP="${6}"
     
-    . /home/$USER/dehydrated/hooks/cfhookbash/deploy.sh
+    . $PWD/hooks/cfhookbash/deploy.sh
 
     # This hook is called once for each certificate that has been
     # produced. Here you might, for instance, copy your new certificates
