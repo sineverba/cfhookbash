@@ -7,3 +7,4 @@
 !LICENSE
 !hook.sh
 !config.default.sh
+!deploy.config.sh
