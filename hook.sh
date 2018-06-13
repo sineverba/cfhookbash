@@ -1,15 +1,18 @@
 #!/usr/bin/env bash
 
-# We have current function here
-# echo "${1}"
+prefix="_acme-challenge."
 
 deploy_challenge() {
     local DOMAIN="${1}" TOKEN_FILENAME="${2}" TOKEN_VALUE="${3}"
     
-    . /home/$USER/git_projects/cfhookbash/config.sh
+    . /home/$USER/dehydrated/cfhookbash/config.sh
     
-    echo "$token"
-	echo "$zones"
+    curl -X POST "https://api.cloudflare.com/client/v4/zones/$zones/dns_records"\
+     	-H "X-Auth-Email: $email"\
+     	-H "X-Auth-Key: $global_api_key"\
+     	-H "Content-Type: application/json"\
+     	--data '{"type":"TXT","name":"'$prefix$1'","content":"'$3'","ttl":120,"priority":10,"proxied":false}'\
+		-o "$1".txt
     
     # This hook is called once for every domain that needs to be
     # validated, including any alternative names you may have listed.
@@ -34,6 +37,21 @@ deploy_challenge() {
 
 clean_challenge() {
     local DOMAIN="${1}" TOKEN_FILENAME="${2}" TOKEN_VALUE="${3}"
+    
+    . /home/$USER/dehydrated/cfhookbash/config.sh
+    
+    key_value=$(grep -Po '"id":.*?[^\\]"' $PWD/$1.txt)
+	#Remove first 6 occurence
+	id="${key_value:6}"
+	#Remove last char
+	id="${id::-1}"
+	
+	curl -X DELETE "https://api.cloudflare.com/client/v4/zones/$zones/dns_records/$id" \
+     -H "X-Auth-Email: $email"\
+     -H "X-Auth-Key: $global_api_key"\
+     -H "Content-Type: application/json"
+     
+     rm $PWD/$1.txt
 
     # This hook is called after attempting to validate each domain,
     # whether or not validation was successful. Here you can delete
