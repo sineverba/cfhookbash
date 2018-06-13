@@ -82,6 +82,8 @@ home.example.net
 ```
 cd ~/dehydrated/cfhookbash
 cp config.default.sh config.sh && rm config.default.sh && nano config.sh
+chmod 755 hook.sh
+chmod 755 config.sh
 ```
 
 We need to edit `config.default.sh`. To get values for zones, login to your Cloudflare account, section "DNS" of your domain. Click the link API and you will get some example. Zones is the long string 
