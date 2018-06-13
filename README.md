@@ -105,6 +105,14 @@ cd ~/dehydrated
 
 You will find the certificates inside `~/dehydrated/certs/www.example.com` (of course the domain name is your).
 
+## Post deploy
+You can find in `hook.sh` a recall to another file (`deploy.sh`).
+Here you can write operation different, for every domain.
+Usage:
+```
+copy deploy.config.sh deploy.sh && rm deploy.config.sh && nano deploy.sh
+```
+
 ## Cronjob (try renew every monday)
 
 To run as cronjob specify full paths
