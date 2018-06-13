@@ -5,7 +5,7 @@ prefix="_acme-challenge."
 deploy_challenge() {
     local DOMAIN="${1}" TOKEN_FILENAME="${2}" TOKEN_VALUE="${3}"
     
-    . /home/$USER/dehydrated/cfhookbash/config.sh
+    . /home/$USER/dehydrated/hooks/cfhookbash/config.sh
     
     curl -X POST "https://api.cloudflare.com/client/v4/zones/$zones/dns_records"\
      	-H "X-Auth-Email: $email"\
@@ -38,7 +38,7 @@ deploy_challenge() {
 clean_challenge() {
     local DOMAIN="${1}" TOKEN_FILENAME="${2}" TOKEN_VALUE="${3}"
     
-    . /home/$USER/dehydrated/cfhookbash/config.sh
+    . /home/$USER/dehydrated/hooks/cfhookbash/config.sh
     
     key_value=$(grep -Po '"id":.*?[^\\]"' $PWD/$1.txt)
 	#Remove first 6 occurence
