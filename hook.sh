@@ -51,7 +51,7 @@ clean_challenge() {
      -H "X-Auth-Key: $global_api_key"\
      -H "Content-Type: application/json"
      
-     rm $PWD/$1.txt
+     rm $PWD/hooks/cfhookbash/$1.txt
 
     # This hook is called after attempting to validate each domain,
     # whether or not validation was successful. Here you can delete

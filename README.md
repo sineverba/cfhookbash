@@ -82,8 +82,6 @@ home.example.net
 ```
 cd ~/dehydrated/cfhookbash
 cp config.default.sh config.sh && rm config.default.sh && nano config.sh
-chmod 755 hook.sh
-chmod 755 config.sh
 ```
 
 We need to edit `config.default.sh`. To get values for zones, login to your Cloudflare account, section "DNS" of your domain. Click the link API and you will get some example. Zones is the long string 
@@ -109,7 +107,10 @@ You will find the certificates inside `~/dehydrated/certs/www.example.com` (of c
 
 ## Post deploy
 You can find in `hook.sh` a recall to another file (`deploy.sh`).
-Here you can write operation different, for every domain.
+Here you can write different operation to execute **AFTER** every successfull challenge.
+
+You have a stub file `deply.config.sh`.
+
 Usage:
 ```
 copy deploy.config.sh deploy.sh && rm deploy.config.sh && nano deploy.sh
