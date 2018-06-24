@@ -118,13 +118,18 @@ copy deploy.config.sh deploy.sh && rm deploy.config.sh && nano deploy.sh
 
 ## Cronjob (try renew every monday)
 
+Remember that some action require sudo privilege (start and stop webserver, e.g.).
+
+Best is run as root **in the dehydrated folder of your user**.
+
+
 To run as cronjob specify full paths
 
 ```
-crontab -e
-0 4 * * 1 /home/YOUR_USER/dehydrated/dehydrated -c -t dns-01 -k '/home/YOUR_USER/dehydrated/hooks/cfhookbash/hook.sh' >> /home/YOUR_USER/cfhookbash.log
+sudo crontab -e
+0 4 * * 1 cd /home/YOUR_USER/dehydrated && /home/YOUR_USER/dehydrated/dehydrated -c -t dns-01 -k '/home/YOUR_USER/dehydrated/hooks/cfhookbash/hook.sh' >> /home/YOUR_USER/cfhookbash.log
 ```
-Execute every monday at 4AM. After the script execution, `delete_txt.sh` is called to delete the DNS. Create also a log in your home.
+Execute every monday at 4AM. After the script execution, create also a log in your home.
 
 ##### Credits
 
