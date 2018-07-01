@@ -20,6 +20,9 @@ case ${1} in
         #restart domoticz
         /etc/init.d/domoticz.sh restart
 
+	#restart mysensors
+	service mysgw restart
+
         ;;
 
 esac
