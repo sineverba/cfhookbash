@@ -5,7 +5,7 @@
 CloudFlare Bash hook for dehydrated.
 This is a hook for Let's Encrypt client [dehydrated](https://github.com/lukas2511/dehydrated) to use with Cloud Flare.
 
-## Why Cloud Flare? What is this scrip?
+## Why Cloud Flare? What is this script?
 
 You have all (or some) these problems:
 
