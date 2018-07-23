@@ -109,7 +109,7 @@ You will find the certificates inside `~/dehydrated/certs/www.example.com` (of c
 You can find in `hook.sh` a recall to another file (`deploy.sh`).
 Here you can write different operation to execute **AFTER** every successfull challenge.
 
-You have a stub file `deply.config.sh`.
+There is a stub file `deploy.config.sh`.
 
 Usage:
 ```
