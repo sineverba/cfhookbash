@@ -2,17 +2,31 @@
 
 prefix="_acme-challenge."
 
+if [[ ! -f "${PWD}/hooks/cfhookbash/config.sh" ]]; then
+    if [[ -f "${PWD}/config.sh" ]]; then
+        configFile="${PWD}/config.sh";
+    fi
+else
+    configFile="${PWD}/hooks/cfhookbash/config.sh";
+fi
+
+
 deploy_challenge() {
     local DOMAIN="${1}" TOKEN_FILENAME="${2}" TOKEN_VALUE="${3}"
     
-    . $PWD/hooks/cfhookbash/config.sh
-    
-    curl -X POST "https://api.cloudflare.com/client/v4/zones/$zones/dns_records"\
-     	-H "X-Auth-Email: $email"\
-     	-H "X-Auth-Key: $global_api_key"\
-     	-H "Content-Type: application/json"\
-     	--data '{"type":"TXT","name":"'$prefix$1'","content":"'$3'","ttl":120,"priority":10,"proxied":false}'\
-		-o $PWD/hooks/cfhookbash/"$1".txt
+    . "${configFile}"
+    if [[ -z "${ROOT_DIR}" ]];then 
+        rootDirectory="${PWD}/hooks/cfhookbash";
+    else
+        rootDirectory="${ROOT_DIR}";
+    fi
+
+    curl -X POST "https://api.cloudflare.com/client/v4/zones/${zones}/dns_records"\
+        -H "X-Auth-Email: ${email}"\
+        -H "X-Auth-Key: ${global_api_key}"\
+        -H "Content-Type: application/json"\
+        --data '{"type":"TXT","name":"'${prefix}${1}'","content":"'${3}'","ttl":120,"priority":10,"proxied":false}'\
+        -o "${rootDirectory}/${1}.txt"
     
     # This hook is called once for every domain that needs to be
     # validated, including any alternative names you may have listed.
@@ -38,20 +52,29 @@ deploy_challenge() {
 clean_challenge() {
     local DOMAIN="${1}" TOKEN_FILENAME="${2}" TOKEN_VALUE="${3}"
     
-    . $PWD/hooks/cfhookbash/config.sh
+    . "${configFile}"
     
-    key_value=$(grep -Po '"id":.*?[^\\]"' $PWD/hooks/cfhookbash/"$1".txt)
-	#Remove first 6 occurence
-	id="${key_value:6}"
-	#Remove last char
-	id="${id::-1}"
-	
-	curl -X DELETE "https://api.cloudflare.com/client/v4/zones/$zones/dns_records/$id" \
-     -H "X-Auth-Email: $email"\
-     -H "X-Auth-Key: $global_api_key"\
+    if [[ -z "${ROOT_DIR}" ]];then 
+        rootDirectory="${PWD}/hooks/cfhookbash";
+    else
+        rootDirectory="${ROOT_DIR}";
+    fi
+
+    key_value=$(grep -Po '"id":.*?[^\\]"' "${rootDirectory}/${1}.txt")
+    printf "id: %s\n" "${key_value}"
+    #Remove first 6 occurence
+    id="${key_value:6}"
+    printf "id: %s\n" "${id}"
+    #Remove last char
+    id="${id::-1}"
+    printf "id: %s\n" "${id}"
+    
+    curl -X DELETE "https://api.cloudflare.com/client/v4/zones/$zones/dns_records/${id}" \
+     -H "X-Auth-Email: ${email}"\
+     -H "X-Auth-Key: ${global_api_key}"\
      -H "Content-Type: application/json"
      
-     rm $PWD/hooks/cfhookbash/$1.txt
+     rm "${rootDirectory}/${1}.txt"
 
     # This hook is called after attempting to validate each domain,
     # whether or not validation was successful. Here you can delete
@@ -66,7 +89,7 @@ clean_challenge() {
 deploy_cert() {
     local DOMAIN="${1}" KEYFILE="${2}" CERTFILE="${3}" FULLCHAINFILE="${4}" CHAINFILE="${5}" TIMESTAMP="${6}"
     
-    . $PWD/hooks/cfhookbash/deploy.sh
+    . "${rootDirectory}/deploy.sh"
 
     # This hook is called once for each certificate that has been
     # produced. Here you might, for instance, copy your new certificates
@@ -138,7 +161,7 @@ invalid_challenge() {
     local DOMAIN="${1}" RESPONSE="${2}"
 
     # This hook is called if the challenge response has failed, so domain
-    # owners can be aware and act accordingly.
+    # owners can be aware and act accordingly.ls 
     #
     # Parameters:
     # - DOMAIN
