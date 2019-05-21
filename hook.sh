@@ -22,10 +22,10 @@ deploy_challenge() {
     fi
 
     curl -X POST "https://api.cloudflare.com/client/v4/zones/${zones}/dns_records"\
-        -H "X-Auth-Email: ${email}"\
-        -H "X-Auth-Key: ${global_api_key}"\
-        -H "Content-Type: application/json"\
-        --data '{"type":"TXT","name":"'${prefix}${1}'","content":"'${3}'","ttl":120,"priority":10,"proxied":false}'\
+        -H "X-Auth-Email:\"""${email}\""\
+        -H "X-Auth-Key:\"""${global_api_key}\""\
+        -H "Content-Type:\"application/json\""\
+        --data "'"'{"type":"TXT","name":"'${prefix}${1}'","content":"'${3}'","ttl":120,"priority":10,"proxied":false}'"'"\
         -o "${rootDirectory}/${1}.txt"
     
     # This hook is called once for every domain that needs to be
