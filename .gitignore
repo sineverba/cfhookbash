@@ -1,10 +1,4 @@
-# Ignore everything
-*
-
-# But not these files...
-!README.md
-!.gitignore
-!LICENSE
-!hook.sh
-!config.default.sh
-!deploy.config.sh
+.idea
+.project
+config.sh
+deploy.sh
