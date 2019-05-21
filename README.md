@@ -131,7 +131,9 @@ sudo crontab -e
 ```
 Execute every monday at 4AM. After the script execution, create also a log in your home.
 
-##### Credits
+##### Contributors and credits
+
++ YasharF
 
 Inspired by
 + [https://www.splitbrain.org/blog/2017-08/10-homeassistant_duckdns_letsencrypt](https://www.splitbrain.org/blog/2017-08/10-homeassistant_duckdns_letsencrypt)
