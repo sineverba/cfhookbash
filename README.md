@@ -80,7 +80,7 @@ home.example.net
 4. Copy `config.default.sh` to `config.sh`
 
 ```
-cd ~/dehydrated/cfhookbash
+cd ~/dehydrated/hooks/cfhookbash
 cp config.default.sh config.sh && rm config.default.sh && nano config.sh
 ```
 
@@ -121,7 +121,6 @@ copy deploy.config.sh deploy.sh && rm deploy.config.sh && nano deploy.sh
 Remember that some action require sudo privilege (start and stop webserver, e.g.).
 
 Best is run as root **in the dehydrated folder of your user**.
-
 
 To run as cronjob specify full paths
 
