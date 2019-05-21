@@ -13,9 +13,9 @@ fi
 
 deploy_challenge() {
     local DOMAIN="${1}" TOKEN_FILENAME="${2}" TOKEN_VALUE="${3}"
-    
+
     . "${configFile}"
-    if [[ -z "${ROOT_DIR}" ]];then 
+    if [[ -z "${ROOT_DIR}" ]];then
         rootDirectory="${PWD}/hooks/cfhookbash";
     else
         rootDirectory="${ROOT_DIR}";
@@ -27,7 +27,15 @@ deploy_challenge() {
         -H "Content-Type: application/json"\
         --data '{"type":"TXT","name":"'${prefix}${1}'","content":"'${3}'","ttl":120,"priority":10,"proxied":false}'\
         -o "${rootDirectory}/${1}.txt"
-    
+
+    # Add delay to get the new DNS record
+    local DELAY=60;
+    while [ $DELAY -gt 0 ]; do
+        sleep 1;
+       : $((DELAY--))
+    done
+
+
     # This hook is called once for every domain that needs to be
     # validated, including any alternative names you may have listed.
     #
@@ -51,10 +59,10 @@ deploy_challenge() {
 
 clean_challenge() {
     local DOMAIN="${1}" TOKEN_FILENAME="${2}" TOKEN_VALUE="${3}"
-    
+
     . "${configFile}"
-    
-    if [[ -z "${ROOT_DIR}" ]];then 
+
+    if [[ -z "${ROOT_DIR}" ]];then
         rootDirectory="${PWD}/hooks/cfhookbash";
     else
         rootDirectory="${ROOT_DIR}";
@@ -68,12 +76,12 @@ clean_challenge() {
     #Remove last char
     id="${id::-1}"
     printf "id: %s\n" "${id}"
-    
+
     curl -X DELETE "https://api.cloudflare.com/client/v4/zones/$zones/dns_records/${id}" \
      -H "X-Auth-Email: ${email}"\
      -H "X-Auth-Key: ${global_api_key}"\
      -H "Content-Type: application/json"
-     
+
      rm "${rootDirectory}/${1}.txt"
 
     # This hook is called after attempting to validate each domain,
@@ -88,7 +96,7 @@ clean_challenge() {
 
 deploy_cert() {
     local DOMAIN="${1}" KEYFILE="${2}" CERTFILE="${3}" FULLCHAINFILE="${4}" CHAINFILE="${5}" TIMESTAMP="${6}"
-    
+
     . "${rootDirectory}/deploy.sh"
 
     # This hook is called once for each certificate that has been
@@ -161,7 +169,7 @@ invalid_challenge() {
     local DOMAIN="${1}" RESPONSE="${2}"
 
     # This hook is called if the challenge response has failed, so domain
-    # owners can be aware and act accordingly.ls 
+    # owners can be aware and act accordingly.ls
     #
     # Parameters:
     # - DOMAIN

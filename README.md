@@ -80,7 +80,7 @@ home.example.net
 4. Copy `config.default.sh` to `config.sh`
 
 ```
-cd ~/dehydrated/cfhookbash
+cd ~/dehydrated/hooks/cfhookbash
 cp config.default.sh config.sh && rm config.default.sh && nano config.sh
 ```
 
@@ -122,7 +122,6 @@ Remember that some action require sudo privilege (start and stop webserver, e.g.
 
 Best is run as root **in the dehydrated folder of your user**.
 
-
 To run as cronjob specify full paths
 
 ```
@@ -131,7 +130,9 @@ sudo crontab -e
 ```
 Execute every monday at 4AM. After the script execution, create also a log in your home.
 
-##### Credits
+##### Contributors and credits
+
++ YasharF
 
 Inspired by
 + [https://www.splitbrain.org/blog/2017-08/10-homeassistant_duckdns_letsencrypt](https://www.splitbrain.org/blog/2017-08/10-homeassistant_duckdns_letsencrypt)
