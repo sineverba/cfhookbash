@@ -97,6 +97,12 @@ clean_challenge() {
 deploy_cert() {
     local DOMAIN="${1}" KEYFILE="${2}" CERTFILE="${3}" FULLCHAINFILE="${4}" CHAINFILE="${5}" TIMESTAMP="${6}"
 
+    if [[ -z "${ROOT_DIR}" ]];then
+        rootDirectory="${PWD}/hooks/cfhookbash";
+    else
+        rootDirectory="${ROOT_DIR}";
+    fi
+
     . "${rootDirectory}/deploy.sh"
 
     # This hook is called once for each certificate that has been
