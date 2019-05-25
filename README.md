@@ -131,9 +131,14 @@ sudo crontab -e
 ```
 Execute every monday at 4AM. After the script execution, create also a log in your home.
 
-##### Contributors and credits
+## Update
++ Move to folder where script resides (tipically `~/dehydrated/hooks/cfhookbash`
++ Type `git checkout master && git pull`
+
+##### Contributors, credits and bug discovery :)
 
 + YasharF
++ Ramblurr
 
 Inspired by
 + [https://www.splitbrain.org/blog/2017-08/10-homeassistant_duckdns_letsencrypt](https://www.splitbrain.org/blog/2017-08/10-homeassistant_duckdns_letsencrypt)
