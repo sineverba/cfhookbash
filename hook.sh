@@ -30,6 +30,7 @@ deploy_challenge() {
 
     # Add delay to get the new DNS record
     local DELAY=60;
+    echo "+++ Wait for ${DELAY} seconds. +++";
     while [ $DELAY -gt 0 ]; do
         sleep 1;
        : $((DELAY--))
