@@ -1,5 +1,5 @@
 # Cloud Flare hook bash for dehydrated - DNS-01 Challenge Let's Encrypt
-## v 2.2.1
+## v 2.3.0
 
 ## DNS-01 challenge solved for "pratically" every domain, thanks to Cloudflare and their API.
 
