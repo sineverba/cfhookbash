@@ -1,5 +1,5 @@
-# X.Y.Z next version (feature ready in development)
-+ Add instructions to update
+#2.3.1
++ Fix #27
 
 #2.2.1
 + Fix #15
