@@ -1,4 +1,4 @@
-# Next version
+# 2.4.0
 + Fix #28
 + Update README.md (Disable ACME v1 registrations)
 + Update year license
