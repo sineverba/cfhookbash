@@ -1,5 +1,6 @@
 # Cloud Flare hook bash for dehydrated - DNS-01 Challenge Let's Encrypt
-## v 2.3.1
+
+**If you like this project, or use it, please, star it!**
 
 ## DNS-01 challenge solved for "pratically" every domain, thanks to Cloudflare and their API.
 
@@ -41,7 +42,7 @@ Create a `config` file in same folder of `./dehydrated` and put staging inside, 
 **Warning! Use this ONLY during development, not in production!**
 
 ```
-CA="https://acme-staging.api.letsencrypt.org/directory"
+CA="https://acme-staging-v02.api.letsencrypt.org/directory"
 ```
 
 ## Require
@@ -85,11 +86,13 @@ cd ~/dehydrated/hooks/cfhookbash
 cp config.default.sh config.sh && rm config.default.sh && nano config.sh
 ```
 
-We need to edit `config.default.sh`. To get values for zones, login to your Cloudflare account, section "DNS" of your domain. Click the link API and you will get some example. Zones is the long string 
+We need to edit `config.default.sh`. To get values:
 
-`POST https://api.cloudflare.com/client/v4/zones/THIS_IS_ZONES/dns_records`
+#### Zone
+Login to your Cloudflare account, section "Overview". ZONE is found under "API" on the right column ("Zone ID").
 
-**`global_api_key` is found under your account**
+#### Global API Key
+It is under "your account".
 
 ## Usage
 

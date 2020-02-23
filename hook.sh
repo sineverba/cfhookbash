@@ -104,7 +104,12 @@ deploy_cert() {
         rootDirectory="${ROOT_DIR}";
     fi
 
-    . "${rootDirectory}/deploy.sh"
+    FILE="${rootDirectory}/deploy.sh"
+    if test -f "$FILE"; then
+
+        . "$FILE"
+
+    fi
 
     # This hook is called once for each certificate that has been
     # produced. Here you might, for instance, copy your new certificates
