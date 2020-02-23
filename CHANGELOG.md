@@ -1,10 +1,15 @@
-#2.3.1
+# Next version
++ Fix #28
++ Update README.md (Disable ACME v1 registrations)
++ Update year license
+
+##2.3.1
 + Fix #27
 
-#2.2.1
+##2.2.1
 + Fix #15
 
-#2.2.0
+##2.2.0
 + Fix #5
 + Fix #9
 + Fix typo in README.md
@@ -14,5 +19,5 @@
 + Add CHANGELOG.md
 + Refactor .gitignore
 
-#2.1.0
+##2.1.0
 Stable branch
