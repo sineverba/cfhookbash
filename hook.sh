@@ -29,7 +29,7 @@ deploy_challenge() {
         -o "${rootDirectory}/${1}.txt"
 
     # Add delay to get the new DNS record
-    local DELAY=60;
+    local DELAY=20;
     echo "+++ Wait for ${DELAY} seconds. +++";
     while [ $DELAY -gt 0 ]; do
         sleep 1;
@@ -69,13 +69,15 @@ clean_challenge() {
         rootDirectory="${ROOT_DIR}";
     fi
 
-    key_value=$(grep -Po '"id":.*?[^\\]"' "${rootDirectory}/${1}.txt")
+    # key_value=$(grep -Po '"id":.*?[^\\]"' "${rootDirectory}/${1}.txt")
+    key_value=$(grep -oP '(?<="id": ")[^"]*' "${rootDirectory}/${1}.txt")
     #printf "id: %s\n" "${key_value}"
     #Remove first 6 occurence
-    id="${key_value:6}"
+    #id="${key_value:6}"
     #printf "id: %s\n" "${id}"
     #Remove last char
-    id="${id::-1}"
+    #id="${id::-1}"
+    id="${key_value}"
     #printf "id: %s\n" "${id}"
 
     curl -X DELETE "https://api.cloudflare.com/client/v4/zones/$zones/dns_records/${id}" \
@@ -83,7 +85,7 @@ clean_challenge() {
      -H "X-Auth-Key: ${global_api_key}"\
      -H "Content-Type: application/json"
 
-     rm "${rootDirectory}/${1}.txt"
+    # rm "${rootDirectory}/${1}.txt"
 
     # This hook is called after attempting to validate each domain,
     # whether or not validation was successful. Here you can delete
