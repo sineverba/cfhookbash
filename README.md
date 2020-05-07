@@ -1,13 +1,14 @@
-# Cloud Flare hook bash for dehydrated - DNS-01 Challenge Let's Encrypt
+Cloudflare hook bash for dehydrated - DNS-01 Challenge Let's Encrypt
+====================================================================
 
 **If you like this project, or use it, please, star it!**
 
 ## DNS-01 challenge solved for "pratically" every domain, thanks to Cloudflare and their API.
 
-CloudFlare Bash hook for dehydrated.
-This is a hook for Let's Encrypt client [dehydrated](https://github.com/lukas2511/dehydrated) to use with Cloud Flare.
+Cloudflare Bash hook for dehydrated.
+This is a hook for Let's Encrypt client [dehydrated](https://github.com/lukas2511/dehydrated) to use with Cloudflare.
 
-## Why Cloud Flare? What is this script?
+## Why Cloudflare? What is this script?
 
 You have all (or some) these problems:
 
@@ -32,7 +33,7 @@ This bash hook will:
 4. Wait for LE answer
 5. Create / renew the certificates
 
-You will have the certificates in the folder of `dehydrated`).
+You will have the certificates in the folder of `dehydrated`.
 
 In simple words: you can complete the DNS challenges (dns-01).
 
@@ -47,7 +48,7 @@ CA="https://acme-staging-v02.api.letsencrypt.org/directory"
 
 ## Require
 + cURL
-+ Active account on Cloud Flare (tested with free account)
++ Active account on Cloudflare (tested with free account)
 
 ## Setup
 ```
@@ -88,11 +89,10 @@ cp config.default.sh config.sh && rm config.default.sh && nano config.sh
 
 We need to edit `config.default.sh`. To get values:
 
-#### Zone
-Login to your Cloudflare account, section "Overview". ZONE is found under "API" on the right column ("Zone ID").
-
-#### Global API Key
-It is under "your account".
+| Value          | Where to find |
+| -------------- | ------------- |
+| Zone ID        | Main page domain > Right Column > API section |
+| Global API Key | Account > My Profile > API Tokens > Api Keys > Global API Key |
 
 ## Usage
 
@@ -138,6 +138,15 @@ Execute every monday at 4AM. After the script execution, create also a log in yo
 + Move to folder where script resides (tipically `~/dehydrated/hooks/cfhookbash`
 + Type `git checkout master && git pull`
 
+## Commons error messages
+
+### 7003
+``` bash
+{"success":false,"errors":[{"code":7003,"message":"Could not route to /zones/dns_records, perhaps your object identifier is invalid?"},{"code":7000,"message":"No route for that URI"}],"messages":[],"result":null}
+```
+
+Solution > check your `Zone ID` value
+
 ##### Contributors, credits and bug discovery :)
 
 + YasharF
@@ -145,4 +154,4 @@ Execute every monday at 4AM. After the script execution, create also a log in yo
 
 Inspired by
 + [https://www.splitbrain.org/blog/2017-08/10-homeassistant_duckdns_letsencrypt](https://www.splitbrain.org/blog/2017-08/10-homeassistant_duckdns_letsencrypt)
-+ [https://github.com/kappataumu/letsencrypt-cloudflare-hook](https://github.com/kappataumu/letsencrypt-cloudflare-hook)
++ [https://github.com/kappataumu/letsencrypt-Cloudflare-hook](https://github.com/kappataumu/letsencrypt-Cloudflare-hook)
