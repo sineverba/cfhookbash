@@ -1,4 +1,13 @@
-# 2.4.1
+# 2.4.2
++ Fix the error
+```bash
+{
+"code": 1001,
+"error": "method_not_allowed"
+}}
+```
+
+## 2.4.1
 + Close #16
 + Add Common error messages on README.md
 
