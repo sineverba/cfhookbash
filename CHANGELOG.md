@@ -1,4 +1,8 @@
-# 2.4.0
+# 2.4.1
++ Close #16
++ Add Common error messages on README.md
+
+## 2.4.0
 + Fix #28
 + Update README.md (Disable ACME v1 registrations)
 + Update year license
