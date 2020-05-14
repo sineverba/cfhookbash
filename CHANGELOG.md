@@ -2,6 +2,8 @@
 
 ### Refactor
 + Renamed branch from `development` to `develop`
++ Improved `hook.sh` looking for config.sh files
++ Changed instructions (no more need to put cfhookbash as subfolder of dehydrated)
 
 ## 2.4.3
 + Missing remove file.
