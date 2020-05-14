@@ -2,31 +2,36 @@
 
 prefix="_acme-challenge."
 
-if [[ ! -f "${PWD}/hooks/cfhookbash/config.sh" ]]; then
-    if [[ -f "${PWD}/config.sh" ]]; then
-        configFile="${PWD}/config.sh";
-    fi
-else
-    configFile="${PWD}/hooks/cfhookbash/config.sh";
-fi
+#if [[ ! -f "${PWD}/hooks/cfhookbash/config.sh" ]]; then
+#    if [[ -f "${PWD}/config.sh" ]]; then
+#        configFile="${PWD}/config.sh";
+#    fi
+#else
+#    configFile="${PWD}/hooks/cfhookbash/config.sh";
+#fi
+
+# see https://stackoverflow.com/questions/59895/how-to-get-the-source-directory-of-a-bash-script-from-within-the-script-itself
+hookDirectory=$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )
+configFile="${hookDirectory}/config.sh"
+
 
 
 deploy_challenge() {
     local DOMAIN="${1}" TOKEN_FILENAME="${2}" TOKEN_VALUE="${3}"
 
     . "${configFile}"
-    if [[ -z "${ROOT_DIR}" ]];then
-        rootDirectory="${PWD}/hooks/cfhookbash";
-    else
-        rootDirectory="${ROOT_DIR}";
-    fi
+    #if [[ -z "${ROOT_DIR}" ]];then
+    #    hookDirectory="${PWD}/hooks/cfhookbash";
+    #else
+    #    hookDirectory="${ROOT_DIR}";
+    #fi
 
     curl -X POST "https://api.cloudflare.com/client/v4/zones/${zones}/dns_records"\
         -H "X-Auth-Email: ${email}"\
         -H "X-Auth-Key: ${global_api_key}"\
         -H "Content-Type: application/json"\
         --data '{"type":"TXT","name":"'${prefix}${1}'","content":"'${3}'","ttl":120,"priority":10,"proxied":false}'\
-        -o "${rootDirectory}/${1}.txt"
+        -o "${hookDirectory}/${1}.txt"
 
     # Add delay to get the new DNS record
     local DELAY=20;
@@ -63,14 +68,8 @@ clean_challenge() {
 
     . "${configFile}"
 
-    if [[ -z "${ROOT_DIR}" ]];then
-        rootDirectory="${PWD}/hooks/cfhookbash";
-    else
-        rootDirectory="${ROOT_DIR}";
-    fi
-
-    # key_value=$(grep -Po '"id":.*?[^\\]"' "${rootDirectory}/${1}.txt")
-    key_value=$(grep -oP '(?<="id": ")[^"]*' "${rootDirectory}/${1}.txt")
+    # key_value=$(grep -Po '"id":.*?[^\\]"' "${hookDirectory}/${1}.txt")
+    key_value=$(grep -oP '(?<="id": ")[^"]*' "${hookDirectory}/${1}.txt")
     #printf "id: %s\n" "${key_value}"
     #Remove first 6 occurence
     #id="${key_value:6}"
@@ -85,7 +84,7 @@ clean_challenge() {
      -H "X-Auth-Key: ${global_api_key}"\
      -H "Content-Type: application/json"
 
-    rm "${rootDirectory}/${1}.txt"
+    rm "${hookDirectory}/${1}.txt"
 
     # This hook is called after attempting to validate each domain,
     # whether or not validation was successful. Here you can delete
@@ -100,13 +99,7 @@ clean_challenge() {
 deploy_cert() {
     local DOMAIN="${1}" KEYFILE="${2}" CERTFILE="${3}" FULLCHAINFILE="${4}" CHAINFILE="${5}" TIMESTAMP="${6}"
 
-    if [[ -z "${ROOT_DIR}" ]];then
-        rootDirectory="${PWD}/hooks/cfhookbash";
-    else
-        rootDirectory="${ROOT_DIR}";
-    fi
-
-    FILE="${rootDirectory}/deploy.sh"
+    FILE="${hookDirectory}/deploy.sh"
     if test -f "$FILE"; then
 
         . "$FILE"

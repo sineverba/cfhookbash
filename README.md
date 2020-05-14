@@ -7,7 +7,7 @@ Cloudflare Bash hook for [dehydrated](https://github.com/lukas2511/dehydrated).
 
 ## Why Cloudflare? What is this script?
 
-If you cannot solve the `HTTP-01` challenge, you need to solve the DNS-01 challenge. [Details here:](https://letsencrypt.org/docs/challenge-types/).
+If you cannot solve the `HTTP-01` challenge, you need to solve the DNS-01 challenge. [Details here](https://letsencrypt.org/docs/challenge-types/).
 
 With use of Cloudflare API (valid also on free plan!), this script will verify your domain putting a new record with a special token inside DNS zone.
 At the end of Let's Encrypt validation, that record will be deleted.
@@ -20,48 +20,35 @@ You only need:
 
 You will find the certificates in the folder of `dehydrated`.
 
-### Require
+### Prerequisites
+
+`cfhookbash` has some prerequisites:
+
 + cURL
 + Active account on Cloudflare (tested with free account)
++ Dehydrated ([follow the instructions on Github](https://github.com/dehydrated-io/dehydrated))
 
 ### Setup
-```
+
+``` shell
 cd ~
-git clone https://github.com/lukas2511/dehydrated
-cd dehydrated
-mkdir hooks
-cd hooks
 git clone https://github.com/sineverba/cfhookbash.git
-cd ..
-```
-
-Or, in one line
-
-```
-cd ~ && git clone https://github.com/lukas2511/dehydrated && cd dehydrated && mkdir hooks && cd hooks && git clone https://github.com/sineverba/cfhookbash.git && cd ..
 ```
 
 
 ### Configuration
 
 1. Create a file `domains.txt` **in the folder of `dehydrated`**
-2. Put inside a list (one for line) of domain that you want secure.
+2. Put inside a list (one for line) of domains that need certificates.
 
 ``` shell
 www.example.com
 home.example.net
 [...]
 ```
-
-3. Move inside `cfhookbash` folder
-4. Copy `config.default.sh` to `config.sh`
-
-```
-cd ~/dehydrated/hooks/cfhookbash
-cp config.default.sh config.sh && rm config.default.sh && nano config.sh
-```
-
-We need to edit `config.sh`. To get values:
+3. Move to the folder of `cfhookbash`
+3. Copy `config.default.sh` to `config.sh`
+4. Edit `config.sh`. To get values:
 
 | Value          | Where to find |
 | -------------- | ------------- |
@@ -70,8 +57,10 @@ We need to edit `config.sh`. To get values:
 
 ### Usage
 
+Make a first run with `CA="https://acme-staging-v02.api.letsencrypt.org/directory"` placed in a `config` file in root directory of `dehydrated`.
+
 ``` shell
-./dehydrated -c -t dns-01 -k 'hooks/cfhookbash/hook.sh'
+./dehydrated -c -t dns-01 -k '${PATH_WHERE_YOU_CLONED_CFHOOKBASH}/cfhookbash/hook.sh'
 ```
 
 You will find the certificates inside `~/dehydrated/certs/[your.domain.name`.

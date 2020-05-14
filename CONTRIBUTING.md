@@ -3,6 +3,17 @@
 Contributions are **welcome** and will be fully **credited**. This page details how to 
 contribute and the expected code quality for all contributions.
 
+## ACME stage url
+
+Create a `config` file in same folder of `./dehydrated` with following content, to no hit Let's Encrypt limits.
+
+Warning! Use this ONLY during development, not in production!
+
+``` shell
+CA="https://acme-staging-v02.api.letsencrypt.org/directory"
+```
+
+
 ## Pull Requests
 
 We accept contributions via Pull Requests.
