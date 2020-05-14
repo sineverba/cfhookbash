@@ -1,153 +1,110 @@
-Cloudflare hook bash for dehydrated - DNS-01 Challenge Let's Encrypt
-====================================================================
+Cloudflare dns-01 challenge hook bash for dehydrated
+====================================================
 
 **If you like this project, or use it, please, star it!**
 
-## DNS-01 challenge solved for "pratically" every domain, thanks to Cloudflare and their API.
-
-Cloudflare Bash hook for dehydrated.
-This is a hook for Let's Encrypt client [dehydrated](https://github.com/lukas2511/dehydrated) to use with Cloudflare.
+Cloudflare Bash hook for [dehydrated](https://github.com/lukas2511/dehydrated).
 
 ## Why Cloudflare? What is this script?
 
-You have all (or some) these problems:
+If you cannot solve the `HTTP-01` challenge, you need to solve the DNS-01 challenge. [Details here](https://letsencrypt.org/docs/challenge-types/).
 
-+ Your domain registrar doesn't have / dont' want give you API to write automatically new DNS record (for DNS-01 Challenge of Let's Encrypt)
-+ Your ISP blocks 80/443 port
-+ You cannot open one or both ports (e.g. several routers have management page only on 80 port)
-+ Let's Encrypt needs to verify on both (80 and 443) to release / renew certificate
+With use of Cloudflare API (valid also on free plan!), this script will verify your domain putting a new record with a special token inside DNS zone.
+At the end of Let's Encrypt validation, that record will be deleted.
 
 You only need:
 
-1. Register on Cloudflare
-2. Change your DNS to manage them in Cloudflare (follow their guide). This ATM is valid also for free user!
+1. Register on Cloudflare (it works also on free plan)
+2. Change your domain DNS to manage them in Cloudflare (follow their guide).
 3. Run `dehydrated` with this hook.
 
-Finish! Stop! End!
+You will find the certificates in the folder of `dehydrated`.
 
-This bash hook will:
+### Prerequisites
 
-1. Contact Let's Encrpyt for DNS-01 challenge (no anymore need forwarded port)
-2. Get the record to write in DNS
-3. Call Cloudflare API and write record
-4. Wait for LE answer
-5. Create / renew the certificates
+`cfhookbash` has some prerequisites:
 
-You will have the certificates in the folder of `dehydrated`.
-
-In simple words: you can complete the DNS challenges (dns-01).
-
-## Development
-Everyone is welcome to contribute!
-Create a `config` file in same folder of `./dehydrated` and put staging inside, to no hit Let's Encrypt limit.
-**Warning! Use this ONLY during development, not in production!**
-
-```
-CA="https://acme-staging-v02.api.letsencrypt.org/directory"
-```
-
-## Require
 + cURL
 + Active account on Cloudflare (tested with free account)
++ Dehydrated ([follow the instructions on Github](https://github.com/dehydrated-io/dehydrated))
 
-## Setup
-```
+### Setup
+
+``` shell
 cd ~
-git clone https://github.com/lukas2511/dehydrated
-cd dehydrated
-mkdir hooks
-cd hooks
 git clone https://github.com/sineverba/cfhookbash.git
-cd ..
-```
-
-Or, in one line
-
-```
-cd ~ && git clone https://github.com/lukas2511/dehydrated && cd dehydrated && mkdir hooks && cd hooks && git clone https://github.com/sineverba/cfhookbash.git && cd ..
 ```
 
 
-## Configuration
+### Configuration
 
 1. Create a file `domains.txt` **in the folder of `dehydrated`**
-2. Put inside a list (one for line) of domain that you want secure.
+2. Put inside a list (one for line) of domains that need certificates.
 
-```
+``` shell
 www.example.com
 home.example.net
-...
+[...]
 ```
-
-3. Move inside `cfhookbash` folder
-4. Copy `config.default.sh` to `config.sh`
-
-```
-cd ~/dehydrated/hooks/cfhookbash
-cp config.default.sh config.sh && rm config.default.sh && nano config.sh
-```
-
-We need to edit `config.default.sh`. To get values:
+3. Move to the folder of `cfhookbash`
+3. Copy `config.default.sh` to `config.sh`
+4. Edit `config.sh`. To get values:
 
 | Value          | Where to find |
 | -------------- | ------------- |
 | Zone ID        | Main page domain > Right Column > API section |
 | Global API Key | Account > My Profile > API Tokens > Api Keys > Global API Key |
 
-## Usage
+### Usage
 
-### First start: need to accept terms
-```
-cd ~/dehydrated
-./dehydrated --register --accept-terms
-```
+Make a first run with `CA="https://acme-staging-v02.api.letsencrypt.org/directory"` placed in a `config` file in root directory of `dehydrated`.
 
-### Next start
-```
-./dehydrated -c -t dns-01 -k 'hooks/cfhookbash/hook.sh'
+``` shell
+./dehydrated -c -t dns-01 -k '${PATH_WHERE_YOU_CLONED_CFHOOKBASH}/cfhookbash/hook.sh'
 ```
 
-You will find the certificates inside `~/dehydrated/certs/www.example.com` (of course the domain name is your).
+You will find the certificates inside `~/dehydrated/certs/[your.domain.name`.
 
-## Post deploy
+### Post deploy
 You can find in `hook.sh` a recall to another file (`deploy.sh`).
 Here you can write different operation to execute **AFTER** every successfull challenge.
 
 There is a stub file `deploy.config.sh`.
 
 Usage:
-```
+
+``` shell
 copy deploy.config.sh deploy.sh && rm deploy.config.sh && nano deploy.sh
 ```
 
-## Cronjob (try renew every monday)
+### Cronjob
 
 Remember that some action require sudo privilege (start and stop webserver, e.g.).
 
-Best is run as root **in the dehydrated folder of your user**.
+Best is run as root and running in cronjob specify full paths.
 
-To run as cronjob specify full paths
+Following script will run every monday at 4AM and will create a log in home folder.
 
-```
-sudo crontab -e
+`$ sudo crontab -e`
+
+``` shell
 0 4 * * 1 cd /home/YOUR_USER/dehydrated && /home/YOUR_USER/dehydrated/dehydrated -c -t dns-01 -k '/home/YOUR_USER/dehydrated/hooks/cfhookbash/hook.sh' >> /home/YOUR_USER/cfhookbash.log
 ```
-Execute every monday at 4AM. After the script execution, create also a log in your home.
 
-## Update
-+ Move to folder where script resides (tipically `~/dehydrated/hooks/cfhookbash`
+#### Update
++ Move to folder where you downloaded it
 + Type `git checkout master && git pull`
 
-## Commons error messages
+#### Commons error messages
 
-### 7003
-``` bash
-{"success":false,"errors":[{"code":7003,"message":"Could not route to /zones/dns_records, perhaps your object identifier is invalid?"},{"code":7000,"message":"No route for that URI"}],"messages":[],"result":null}
-```
+| Error | Body | Solution |
+| ----- | ---- | -------- |
+| 7003  | `{ "code": 7003, "message": "Could not route to /zones/dns_records, perhaps your object identifier is invalid?" }, { "code": 7000, "message": "No route for that URI" }` | Check your `Zone ID` value. Probably is wrong.
 
-Solution > check your `Zone ID` value
+### Contributing
+Everyone is welcome to contribute! See `CONTRIBUTING.md`
 
-##### Contributors, credits and bug discovery :)
+### Contributors, credits and bug discovery :)
 
 + YasharF
 + Ramblurr
