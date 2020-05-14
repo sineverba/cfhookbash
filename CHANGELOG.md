@@ -1,4 +1,4 @@
-# Next version
+# 3.0.0
 
 ### Refactor
 + Renamed branch from `development` to `develop`
