@@ -2,7 +2,7 @@ os: linux
 
 dist: bionic
 
-language: minimal
+language: shell
 
 env:
   DOCKER_USERNAME: sineverba
