@@ -5,6 +5,8 @@
 + Add `Travis`
 + Add labels to Docker
 + Add `deploy` script
++ Add Docker instructions
++ Add `Microbadger` webhook
 
 ## 3.0.0
 
