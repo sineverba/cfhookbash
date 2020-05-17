@@ -21,20 +21,34 @@ You only need:
 
 1. Register on Cloudflare (it works also on free plan)
 2. Change your domain DNS to manage them in Cloudflare (follow their guide).
-3. Run `dehydrated` with this hook.
+3. Run `dehydrated` with this hook (or run Docker image, see below)
 
 You will find the certificates in the folder of `dehydrated`.
 
-### Docker
-+ Clone the project
-+ Create (if they not exists) two folders: `/docker/app/certs` and `/docker/app/config`
-+ Copy config.default.sh in `/docker/app/config/config.sh` and edit it
-+ Create a `domains.txt` file in `/app/config`, a domain for every line
-+ To **run in production**, delete file "config" under `/app/config`
+----------------------------------------------------
 
+### Docker mode
++ Make a new dir (e.g. `mkdir -p /home/$USER/cfhookbashdocker`)
++ Create two folders: `docker/app/certs` and `docker/app/config`
++ Create `config.sh` in `docker/app/config/config.sh` and fill it (see below how to get data)
++ Create a `domains.txt` file in `docker/app/config`, insert a domain for every line
++ Make a first run in stage mode: create a `config` file under `docker/app/config` with this content `CA="https://acme-staging-v02.api.letsencrypt.org/directory"`
 
+Run
 
-### Prerequisites
+``` shell
+docker run -it --rm \
+  -v ${PWD}/docker/app/config:/config \
+  -v ${PWD}/docker/app/certs:/certs \
+  --name cfhookbash \
+  sineverba/cfhookbash:latest
+```
+
++ Certs will be available in `/docker/app/certs`
+
+-------------------------------------------------------
+
+### Classic mode: Prerequisites
 
 `cfhookbash` has some prerequisites:
 
@@ -42,7 +56,7 @@ You will find the certificates in the folder of `dehydrated`.
 + Active account on Cloudflare (tested with free account)
 + Dehydrated ([follow the instructions on Github](https://github.com/dehydrated-io/dehydrated))
 
-### Setup
+### Classic mode: Setup
 
 ``` shell
 cd ~
@@ -50,7 +64,7 @@ git clone https://github.com/sineverba/cfhookbash.git
 ```
 
 
-### Configuration
+### Classic mode: Configuration
 
 1. Create a file `domains.txt` **in the folder of `dehydrated`**
 2. Put inside a list (one for line) of domains that need certificates.
@@ -69,7 +83,7 @@ home.example.net
 | Zone ID        | Main page domain > Right Column > API section |
 | Global API Key | Account > My Profile > API Tokens > Api Keys > Global API Key |
 
-### Usage
+### Classic mode: Usage
 
 Make a first run with `CA="https://acme-staging-v02.api.letsencrypt.org/directory"` placed in a `config` file in root directory of `dehydrated`.
 
@@ -79,7 +93,7 @@ Make a first run with `CA="https://acme-staging-v02.api.letsencrypt.org/director
 
 You will find the certificates inside `~/dehydrated/certs/[your.domain.name`.
 
-### Post deploy
+### Classic mode: Post deploy
 You can find in `hook.sh` a recall to another file (`deploy.sh`).
 Here you can write different operation to execute **AFTER** every successfull challenge.
 
@@ -91,7 +105,7 @@ Usage:
 copy deploy.config.sh deploy.sh && rm deploy.config.sh && nano deploy.sh
 ```
 
-### Cronjob
+### Classic mode: Cronjob
 
 Remember that some action require sudo privilege (start and stop webserver, e.g.).
 
