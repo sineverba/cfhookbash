@@ -1,6 +1,8 @@
 #!/bin/sh
 
 set -e
+echo ${TRAVIS_BUILD_DIR}
+echo ${PWD}
 docker run -dit \
     -v /docker/app/config:/config \
     -v /docker/app/dehydrated:/dehydrated \
