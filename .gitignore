@@ -2,6 +2,7 @@
 .project
 config.sh
 deploy.sh
+!.deploy/scripts/deploy.sh
 docker/app/certs/*
 !docker/app/certs/.gitkeep
 docker/app/config/*
