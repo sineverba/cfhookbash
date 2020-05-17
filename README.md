@@ -5,6 +5,11 @@ Cloudflare dns-01 challenge hook bash for dehydrated
 
 Cloudflare Bash hook for [dehydrated](https://github.com/lukas2511/dehydrated).
 
+| CI / CD | Status |
+| ------- | ------ |
+| Travis  | [![Build Status](https://travis-ci.com/sineverba/cfhookbash.svg?branch=master)](https://travis-ci.com/sineverba/cfhookbash) |
+| Docker  | [![](https://images.microbadger.com/badges/image/sineverba/cfhookbash.svg)](https://microbadger.com/images/sineverba/cfhookbash "Get your own image badge on microbadger.com") |
+
 ## Why Cloudflare? What is this script?
 
 If you cannot solve the `HTTP-01` challenge, you need to solve the DNS-01 challenge. [Details here](https://letsencrypt.org/docs/challenge-types/).
@@ -19,6 +24,15 @@ You only need:
 3. Run `dehydrated` with this hook.
 
 You will find the certificates in the folder of `dehydrated`.
+
+### Docker
++ Clone the project
++ Create (if they not exists) two folders: `/docker/app/certs` and `/docker/app/config`
++ Copy config.default.sh in `/docker/app/config/config.sh` and edit it
++ Create a `domains.txt` file in `/app/config`, a domain for every line
++ To **run in production**, delete file "config" under `/app/config`
+
+
 
 ### Prerequisites
 

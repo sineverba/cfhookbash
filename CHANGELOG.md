@@ -1,4 +1,10 @@
-# 3.0.0
+# Next version
+
+### Add
++ Add `Docker`
++ Add `Travis`
+
+## 3.0.0
 
 ### Refactor
 + Renamed branch from `development` to `develop`

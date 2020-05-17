@@ -2,3 +2,10 @@
 .project
 config.sh
 deploy.sh
+docker/app/certs/*
+!docker/app/certs/.gitkeep
+docker/app/config/*
+!docker/app/config/.gitkeep
+!docker/app/config/config
+docker/app/dehydrated/*
+!docker/app/dehydrated/dehydrated

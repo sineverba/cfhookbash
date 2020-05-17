@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+ACCOUNTS_DIR=/dehydrated/accounts
+FILE_CONFIG=/config/config
+FILE_DOMAINS=/config/domains.txt
+FILE_DATA=/config/config.sh
+# Check if config file exists
+if [ -f "$FILE_CONFIG" ]; then
+    echo "A config file exists"
+    cp $FILE_CONFIG /dehydrated/config
+fi
+# Check if domain file exists
+if [ -f "$FILE_DOMAINS" ]; then
+    echo "A domain file exists"
+    cp $FILE_DOMAINS /dehydrated/domains.txt
+fi
+if [ -f "$FILE_DATA" ]; then
+    echo "A data API file exists"
+    cp $FILE_DATA /hooks/config.sh
+    chmod +x /hooks/config.sh
+fi
+# Check if account is registered
+if [ ! -d "$ACCOUNTS_DIR" ]; then
+    echo "Register account"
+    /dehydrated/dehydrated --register --accept-terms
+fi
+/dehydrated/dehydrated -c -t dns-01 -k '/hooks/hook.sh' --out '/certs'
