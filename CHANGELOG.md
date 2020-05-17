@@ -3,6 +3,8 @@
 ### Add
 + Add `Docker`
 + Add `Travis`
++ Add labels to Docker
++ Add `deploy` script
 
 ## 3.0.0
 

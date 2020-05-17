@@ -1,5 +1,4 @@
 # Docker
-+ Add labels to Dockerfile
 + Add Microbadger
 + Add Docker example
 + Add cronjob

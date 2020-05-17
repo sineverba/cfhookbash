@@ -14,6 +14,7 @@ before_install:
     if [[ $TRAVIS_BRANCH == "master" || $TRAVIS_BRANCH == "develop" || $TRAVIS_TAG != "" ]]; then
       chmod +x ./.deploy/scripts/build.sh
       chmod +x ./.deploy/scripts/test.sh
+      chmod +x ./.deploy/scripts/deploy.sh
     fi
 
 install:
@@ -31,5 +32,5 @@ script:
 after_success:
   - |
     if [[ $TRAVIS_TAG != "" ]]; then
-      echo "After success"
+    ./.deploy/scripts/deploy.sh
     fi
