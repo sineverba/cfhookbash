@@ -32,7 +32,7 @@ COPY ./hook.sh /hooks
 
 COPY ./docker/dockerfile-start /usr/local/bin
 
-VOLUME [ "/config" "/certs" ]
+VOLUME [ "/config" "/dehydrated" "/certs" ]
 
 WORKDIR /dehydrated
 
