@@ -7,7 +7,9 @@
 + Add `deploy` script
 + Add Docker instructions
 + Add `Microbadger` webhook
-+ Add `dehydrated` volume
+
+### Refactor
++ Moved `/certs` folder on root
 
 ## 3.0.0
 

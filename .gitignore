@@ -10,3 +10,4 @@ docker/app/config/*
 !docker/app/config/config
 docker/app/dehydrated/*
 !docker/app/dehydrated/dehydrated
+/certs
