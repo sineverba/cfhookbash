@@ -29,7 +29,7 @@ You will find the certificates in the folder of `dehydrated`.
 
 ### Docker mode
 + Make a new dir (e.g. `mkdir -p /home/$USER/cfhookbashdocker`)
-+ Create two folders: `docker/app/certs` and `docker/app/config`
++ Create a `docker/app/config` folder
 + Create `config.sh` in `docker/app/config/config.sh` and fill it (see below how to get data)
 + Create a `domains.txt` file in `docker/app/config`, insert a domain for every line
 + Make a first run in stage mode: create a `config` file under `docker/app/config` with this content `CA="https://acme-staging-v02.api.letsencrypt.org/directory"`
@@ -38,14 +38,14 @@ Run
 
 ``` shell
 docker run -it --rm \
-  -v ${PWD}/docker/app/certs:/certs \
+  -v ${PWD}/certs:/certs \
   -v ${PWD}/docker/app/config:/config \
-  -v ${PWD}/docker/app/dehydrated:/dehydrated \
   --name cfhookbash \
   sineverba/cfhookbash:latest
 ```
 
-+ Certs will be available in `/docker/app/certs`
++ Certs will be available in `/certs`
++ If there are troubles with file permission, set permission to your user after first run (`sudo chown -R $USER:$USER /certs`)
 
 -------------------------------------------------------
 
