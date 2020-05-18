@@ -38,8 +38,9 @@ Run
 
 ``` shell
 docker run -it --rm \
-  -v ${PWD}/docker/app/config:/config \
   -v ${PWD}/docker/app/certs:/certs \
+  -v ${PWD}/docker/app/config:/config \
+  -v ${PWD}/docker/app/dehydrated:/dehydrated \
   --name cfhookbash \
   sineverba/cfhookbash:latest
 ```

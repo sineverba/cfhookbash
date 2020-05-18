@@ -7,6 +7,7 @@
 + Add `deploy` script
 + Add Docker instructions
 + Add `Microbadger` webhook
++ Add `dehydrated` volume
 
 ## 3.0.0
 

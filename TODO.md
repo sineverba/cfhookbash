@@ -1,6 +1,6 @@
 # Docker
-+ Add cronjob
++ Move directory on top level (final user usage)
++ Add cronjob (see stash)
 + Add Force Flag as environment on Docker start
 + Add docker-compose example
-+ Move if possible to upper directory than "docker" on real usage
 + Add UID as env var
