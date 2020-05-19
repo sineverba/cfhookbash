@@ -46,7 +46,6 @@ docker run -it --rm \
 ```
 
 + Certs will be available in `/certs`
-+ If there are troubles with file permission, set permission to your user after first run (`sudo chown -R $USER:$USER /certs`)
 
 -------------------------------------------------------
 
