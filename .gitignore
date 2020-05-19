@@ -11,3 +11,4 @@ docker/app/config/*
 docker/app/dehydrated/*
 !docker/app/dehydrated/dehydrated
 /certs
+/config/domains.txt

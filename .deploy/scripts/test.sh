@@ -3,8 +3,8 @@
 set -e
 
 docker run -dit \
-    -v ${TRAVIS_BUILD_DIR}/docker/app/config:/config \
     -v ${TRAVIS_BUILD_DIR}/certs:/certs \
+    -v ${TRAVIS_BUILD_DIR}/config:/config \
     --name ${DOCKER_IMAGE} \
     --entrypoint=/bin/sh ${DOCKER_USERNAME}/${DOCKER_IMAGE}
 docker exec -it ${DOCKER_IMAGE} cat /dehydrated/dehydrated | grep 0.6.5
