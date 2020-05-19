@@ -46,6 +46,7 @@ docker run -it \
 ```
 
 + Certs will be available in `/certs`
++ Docker run a cronjob every minute
 
 -------------------------------------------------------
 
