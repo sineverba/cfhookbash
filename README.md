@@ -29,17 +29,18 @@ You will find the certificates in the folder of `dehydrated`.
 
 ### Docker mode
 + Make a new dir (e.g. `mkdir -p /home/$USER/cfhookbashdocker`)
-+ Create a `docker/app/config` folder
-+ Create `config.sh` in `docker/app/config/config.sh` and fill it (see below how to get data)
-+ Create a `domains.txt` file in `docker/app/config`, insert a domain for every line
-+ Make a first run in stage mode: create a `config` file under `docker/app/config` with this content `CA="https://acme-staging-v02.api.letsencrypt.org/directory"`
++ Create a `/certs` folder
++ Create a `/config` folder
++ Create a `config.sh` file in `/config/` and fill it (see below how to get data)
++ Create a `domains.txt` file in `/config/` and insert a domain for every line
++ Make a first run in stage mode: create a `config` file under `/config` with this content `CA="https://acme-staging-v02.api.letsencrypt.org/directory"`
 
 Run
 
 ``` shell
 docker run -it --rm \
   -v ${PWD}/certs:/certs \
-  -v ${PWD}/docker/app/config:/config \
+  -v ${PWD}/config:/config \
   --name cfhookbash \
   sineverba/cfhookbash:latest
 ```
