@@ -8,6 +8,7 @@
 + Add Docker instructions
 + Add `Microbadger` webhook
 + Add CRON
++ Add BUILD_ARG to Makefile
 
 ### Refactor
 + Moved `/certs` folder on root

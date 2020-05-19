@@ -1,5 +1,5 @@
 build:
-		@docker build --tag sineverba/cfhookbash:latest --file ./docker/Dockerfile .
+		@docker build --tag sineverba/cfhookbash:latest --build-arg VCS_REF=`git rev-parse --short HEAD` --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` --file ./docker/Dockerfile .
 
 run:
 		@docker run -it -v ${PWD}/certs:/certs -v ${PWD}/config:/config --name cfhookbash sineverba/cfhookbash:latest
@@ -12,6 +12,9 @@ test:
 
 inspect:
 		docker run -it --entrypoint "/bin/bash" -v ${PWD}/certs:/certs -v ${PWD}/config:/config cfhookbash
+
+push:
+		docker push sineverba/cfhookbash:latest
 
 destroy:
 		docker container stop cfhookbash
