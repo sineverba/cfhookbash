@@ -3,7 +3,7 @@
 docker tag ${DOCKER_USERNAME}/${DOCKER_IMAGE} ${DOCKER_USERNAME}/${DOCKER_IMAGE}:latest
 docker tag ${DOCKER_USERNAME}/${DOCKER_IMAGE} ${DOCKER_USERNAME}/${DOCKER_IMAGE}:${TRAVIS_TAG}
 
-echo "$DOCKER_API_KEY" | docker login -u "$DOCKER_USERNAME" --password-stdin
+echo "$DOCKER_API_TOKEN" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
 docker push ${DOCKER_USERNAME}/${DOCKER_IMAGE}:latest;
 docker push ${DOCKER_USERNAME}/${DOCKER_IMAGE}:$TRAVIS_TAG;
