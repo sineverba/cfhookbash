@@ -5,16 +5,16 @@ FILE_DOMAINS=/config/domains.txt
 FILE_DATA=/config/config.sh
 # Check if config file exists
 if [ -f "$FILE_CONFIG" ]; then
-    echo "A config file exists"
+    echo "Found config file"
     cp $FILE_CONFIG /dehydrated/config
 fi
 # Check if domain file exists
 if [ -f "$FILE_DOMAINS" ]; then
-    echo "A domain file exists"
+    echo "Found domain file"
     cp $FILE_DOMAINS /dehydrated/domains.txt
 fi
 if [ -f "$FILE_DATA" ]; then
-    echo "A data API file exists"
+    echo "Found API data"
     cp $FILE_DATA /hooks/config.sh
     chmod +x /hooks/config.sh
 fi
