@@ -23,4 +23,5 @@ if [ ! -d "$ACCOUNTS_DIR" ]; then
     echo "Register account"
     /dehydrated/dehydrated --register --accept-terms
 fi
-/dehydrated/dehydrated -c -t dns-01 -k '/hooks/hook.sh' --out '/certs'
+#/dehydrated/dehydrated -c -t dns-01 -k '/hooks/hook.sh' --out '/certs'
+/usr/sbin/crond -f -l 8
