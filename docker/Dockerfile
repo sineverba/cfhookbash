@@ -27,7 +27,7 @@ RUN mkdir -p /config && \
 #    chown -R runner:runner /certs
 
 
-COPY ./docker/app/crontab.txt /crontab/crontab.txt
+COPY ./docker/crontab.txt /crontab/crontab.txt
 RUN /usr/bin/crontab /crontab/crontab.txt
 
 #USER runner

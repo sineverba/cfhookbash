@@ -1,6 +1,4 @@
 # Docker
-+ Rename `docker/` to `./docker`
-+ Move cronjob txt to upper folder
 + Add Force Flag as environment on Docker start
 + Add docker-compose example
 + Make named volumes
