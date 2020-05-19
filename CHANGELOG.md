@@ -10,6 +10,7 @@
 
 ### Refactor
 + Moved `/certs` folder on root
++ Moved `dehydrated` script on top of `/docker` directory
 
 ## 3.0.0
 

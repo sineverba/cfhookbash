@@ -27,7 +27,7 @@ RUN chown -R runner:runner /config && \
 
 USER runner
 
-COPY ./docker/app/dehydrated/dehydrated /dehydrated
+COPY ./docker/dehydrated /dehydrated
 COPY ./hook.sh /hooks
 
 COPY ./docker/dockerfile-start /usr/local/bin
