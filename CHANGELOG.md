@@ -1,19 +1,8 @@
-# Next version
+# 3.1.0
 
 ### Add
 + Add `Docker`
 + Add `Travis`
-+ Add labels to Docker
-+ Add `deploy` script
-+ Add Docker instructions
-+ Add `Microbadger` webhook
-+ Add CRON
-+ Add BUILD_ARG to Makefile
-
-### Refactor
-+ Moved `/certs` folder on root
-+ Moved `dehydrated` script on top of `/docker` directory
-+ Moved `crontab.txt` to upper folder
 
 ## 3.0.0
 
