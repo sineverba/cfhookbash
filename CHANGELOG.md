@@ -7,6 +7,7 @@
 + Add `deploy` script
 + Add Docker instructions
 + Add `Microbadger` webhook
++ Add CRON
 
 ### Refactor
 + Moved `/certs` folder on root

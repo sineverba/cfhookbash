@@ -18,12 +18,17 @@ RUN apk add --no-cache bash \
 RUN mkdir -p /config && \
     mkdir -p /dehydrated && \
     mkdir -p /hooks && \
-    mkdir -p /certs
+    mkdir -p /certs && \
+    mkdir -p /crontab
 
 #RUN chown -R runner:runner /config && \
 #    chown -R runner:runner /dehydrated && \
 #    chown -R runner:runner /hooks && \
 #    chown -R runner:runner /certs
+
+
+COPY ./docker/app/crontab.txt /crontab/crontab.txt
+RUN /usr/bin/crontab /crontab/crontab.txt
 
 #USER runner
 
