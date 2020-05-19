@@ -38,7 +38,7 @@ You will find the certificates in the folder of `dehydrated`.
 Run
 
 ``` shell
-docker run -it --rm \
+docker run -it \
   -v ${PWD}/certs:/certs \
   -v ${PWD}/config:/config \
   --name cfhookbash \
