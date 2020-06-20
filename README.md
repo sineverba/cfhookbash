@@ -17,6 +17,8 @@ If you cannot solve the `HTTP-01` challenge, you need to solve the DNS-01 challe
 With use of Cloudflare API (valid also on free plan!), this script will verify your domain putting a new record with a special token inside DNS zone.
 At the end of Let's Encrypt validation, that record will be deleted.
 
+Depends on `jq`: `sudo apt get install -y jq`
+
 You only need:
 
 1. Register on Cloudflare (it works also on free plan)
@@ -25,36 +27,14 @@ You only need:
 
 You will find the certificates in the folder of `dehydrated`.
 
-----------------------------------------------------
 
-### Docker mode
-+ Make a new dir (e.g. `mkdir -p /home/$USER/cfhookbashdocker`)
-+ Create a `/certs` folder
-+ Create a `/config` folder
-+ Create a `config.sh` file in `/config/` and fill it (see below how to get data)
-+ Create a `domains.txt` file in `/config/` and insert a domain for every line
-+ Make a first run in stage mode: create a `config` file under `/config` with this content `CA="https://acme-staging-v02.api.letsencrypt.org/directory"`
-
-Run
-
-``` shell
-docker run -it \
-  -v ${PWD}/certs:/certs \
-  -v ${PWD}/config:/config \
-  --name cfhookbash \
-  sineverba/cfhookbash:latest
-```
-
-+ Certs will be available in `/certs`
-+ Docker run a cronjob every minute
-
--------------------------------------------------------
 
 ### Classic mode: Prerequisites
 
 `cfhookbash` has some prerequisites:
 
 + cURL
++ jq
 + Active account on Cloudflare (tested with free account)
 + Dehydrated ([follow the instructions on Github](https://github.com/dehydrated-io/dehydrated))
 
@@ -121,7 +101,7 @@ Following script will run every monday at 4AM and will create a log in home fold
 0 4 * * 1 cd /home/YOUR_USER/dehydrated && /home/YOUR_USER/dehydrated/dehydrated -c -t dns-01 -k '/home/YOUR_USER/dehydrated/hooks/cfhookbash/hook.sh' >> /home/YOUR_USER/cfhookbash.log
 ```
 
-#### Update
+#### Update / upgrade
 + Move to folder where you downloaded it
 + Type `git checkout master && git pull`
 
@@ -142,3 +122,28 @@ Everyone is welcome to contribute! See `CONTRIBUTING.md`
 Inspired by
 + [https://www.splitbrain.org/blog/2017-08/10-homeassistant_duckdns_letsencrypt](https://www.splitbrain.org/blog/2017-08/10-homeassistant_duckdns_letsencrypt)
 + [https://github.com/kappataumu/letsencrypt-Cloudflare-hook](https://github.com/kappataumu/letsencrypt-Cloudflare-hook)
+
+----------------------------------------------------
+
+### Docker mode - beware! Not stable and under development!
++ Make a new dir (e.g. `mkdir -p /home/$USER/cfhookbashdocker`)
++ Create a `/certs` folder
++ Create a `/config` folder
++ Create a `config.sh` file in `/config/` and fill it (see below how to get data)
++ Create a `domains.txt` file in `/config/` and insert a domain for every line
++ Make a first run in stage mode: create a `config` file under `/config` with this content `CA="https://acme-staging-v02.api.letsencrypt.org/directory"`
+
+Run
+
+``` shell
+docker run -it \
+  -v ${PWD}/certs:/certs \
+  -v ${PWD}/config:/config \
+  --name cfhookbash \
+  sineverba/cfhookbash:latest
+```
+
++ Certs will be available in `/certs`
++ Docker run a cronjob every minute
+
+-------------------------------------------------------

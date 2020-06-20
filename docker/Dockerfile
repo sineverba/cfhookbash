@@ -9,6 +9,7 @@ LABEL org.label-schema.vcs-ref=$VCS_REF \
 
 RUN apk add --no-cache bash \
                         curl \
+                        jq \
                         openssl \
                         --upgrade grep
 

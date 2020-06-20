@@ -1,4 +1,12 @@
-# 3.1.1
+# 4.0.0
+
+### Add
++ Add dependency for `jq`
+
+### Fix
++ Fix "method_not_allowed"
+
+## 3.1.1
 
 ### Fix
 + Fix missin DOCKER_API_TOKEN
