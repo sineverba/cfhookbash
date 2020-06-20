@@ -31,10 +31,10 @@ deploy_challenge() {
         -H "X-Auth-Key: ${global_api_key}"\
         -H "Content-Type: application/json"\
         --data '{"type":"TXT","name":"'${prefix}${1}'","content":"'${3}'","ttl":120,"priority":10,"proxied":false}'\
-        -o "${hookDirectory}/${1}.txt"
+        -o "${hookDirectory}/${1}.txt" | jq -r '{"result"}[] | .[0] | .id'
 
     # Add delay to get the new DNS record
-    local DELAY=20;
+    local DELAY=10;
     echo "+++ Wait for ${DELAY} seconds. +++";
     while [ $DELAY -gt 0 ]; do
         sleep 1;
@@ -69,7 +69,9 @@ clean_challenge() {
     . "${configFile}"
 
     # key_value=$(grep -Po '"id":.*?[^\\]"' "${hookDirectory}/${1}.txt")
-    key_value=$(grep -oP '(?<="id": ")[^"]*' "${hookDirectory}/${1}.txt")
+    #cat "${hookDirectory}/${1}.txt"
+    #key_value=$(grep -oP '(?<="id": ")[^"]*' "${hookDirectory}/${1}.txt")
+    key_value=$(cat "${hookDirectory}/${1}.txt" | jq -r '.result.id')
     #printf "id: %s\n" "${key_value}"
     #Remove first 6 occurence
     #id="${key_value:6}"
@@ -77,7 +79,8 @@ clean_challenge() {
     #Remove last char
     #id="${id::-1}"
     id="${key_value}"
-    #printf "id: %s\n" "${id}"
+    printf "id: %s\n" "${id}"
+
 
     curl -X DELETE "https://api.cloudflare.com/client/v4/zones/$zones/dns_records/${id}" \
      -H "X-Auth-Email: ${email}"\
