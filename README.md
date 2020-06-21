@@ -110,6 +110,7 @@ Following script will run every monday at 4AM and will create a log in home fold
 | Error | Body | Solution |
 | ----- | ---- | -------- |
 | 7003  | `{ "code": 7003, "message": "Could not route to /zones/dns_records, perhaps your object identifier is invalid?" }, { "code": 7000, "message": "No route for that URI" }` | Check your `Zone ID` value. Probably is wrong.
+| 1001  | `method_not_allowed` | Install `jq` (`sudo apt install jq`) and upgrade script (`git pull`) |
 
 ### Contributing
 Everyone is welcome to contribute! See `CONTRIBUTING.md`
@@ -127,8 +128,9 @@ Inspired by
 
 ### Docker mode - beware! Not stable and under development!
 + Make a new dir (e.g. `mkdir -p /home/$USER/cfhookbashdocker`)
-+ Create a `/certs` folder
-+ Create a `/config` folder
++ Create a `certs` folder
++ Create one or more folders with name of domain in `certs` (e.g. `certs/example.com` and `certs/test.example.com`)
++ Create a `config` folder
 + Create a `config.sh` file in `/config/` and fill it (see below how to get data)
 + Create a `domains.txt` file in `/config/` and insert a domain for every line
 + Make a first run in stage mode: create a `config` file under `/config` with this content `CA="https://acme-staging-v02.api.letsencrypt.org/directory"`
