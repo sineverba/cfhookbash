@@ -1,4 +1,9 @@
-# 4.0.0
+# Next version
+
++ Update Docker instructions
++ Update error codes
+
+## 4.0.0
 
 ### Add
 + Add dependency for `jq`
