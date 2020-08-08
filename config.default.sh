@@ -1,13 +1,20 @@
+global_api_key="YOUR_GLOBAL_KEY"
+email="admin@example.com"
+
 case ${1} in
-	"www.example.com")
-		global_api_key="YOUR_GLOBAL_KEY"
-		zones="YOUR_ZONES"
-		email="admin@example.com"
+	"example.com")
+		zones="zoneidhere01"
 	;;
 
-	"www.example.net")
-		global_api_key="ANOTHER_GLOBAL_KEY"
-		zones="ANOTHER_ZONE"
-		email="webmaster@example.net"
+	*".example.com")
+		zones="zoneidhere01"
+	;;
+	
+	"example.net")
+		zones="zoneidhere02"
+	;;
+
+	*".example.net")
+		zones="zoneidhere02"
 	;;
 esac
