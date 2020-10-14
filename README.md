@@ -60,15 +60,17 @@ home.example.net
 3. Copy `config.default.sh` to `config.sh`
 4. Edit `config.sh`. To get values:
 
-| Value          | Where to find |
-| -------------- | ------------- |
-| Zone ID        | Main page domain > Right Column > API section |
-| API Token      | Account > My Profile > API Tokens > Create Token |
-| Global API Key | Account > My Profile > API Tokens > Api Keys > Global API Key |
+| Value          | Where to find | Deprecated? |
+| -------------- | ------------- | ----------- |
+| Zone ID        | Main page domain > Right Column > API section | N |
+| API Token      | Account > My Profile > API Tokens > Create Token > API token templates > "Edit zone DNS" | N |
+| Global API Key | Account > My Profile > API Tokens > Api Keys > Global API Key | Y, from 4.1.0  |
 
 You can choose between using an **API token** and using your **global API key**. It is preferred to create a token, since tokens can be restricted to just the permission to edit DNS records in chosen zones (the `DNS:Edit` permission).
 
 If you choose to use an API token, it must be filled into `api_token`. If you want to use your global API key, instead use `global_api_key` and `email`.
+
+`Global API key` is deprecated and will be removed in future version.
 
 ### Classic mode: Usage
 
@@ -78,7 +80,7 @@ Make a first run with `CA="https://acme-staging-v02.api.letsencrypt.org/director
 ./dehydrated -c -t dns-01 -k '${PATH_WHERE_YOU_CLONED_CFHOOKBASH}/cfhookbash/hook.sh'
 ```
 
-You will find the certificates inside `~/dehydrated/certs/[your.domain.name`.
+You will find the certificates inside `~/dehydrated/certs/[your.domain.name]`.
 
 ### Classic mode: Post deploy
 You can find in `hook.sh` a recall to another file (`deploy.sh`).
@@ -124,6 +126,7 @@ Everyone is welcome to contribute! See `CONTRIBUTING.md`
 
 + YasharF
 + Ramblurr
++ Dav999-v
 
 Inspired by
 + [https://www.splitbrain.org/blog/2017-08/10-homeassistant_duckdns_letsencrypt](https://www.splitbrain.org/blog/2017-08/10-homeassistant_duckdns_letsencrypt)
