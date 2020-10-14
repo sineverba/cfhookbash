@@ -26,12 +26,21 @@ deploy_challenge() {
     #    hookDirectory="${ROOT_DIR}";
     #fi
 
-    curl -X POST "https://api.cloudflare.com/client/v4/zones/${zones}/dns_records"\
-        -H "X-Auth-Email: ${email}"\
-        -H "X-Auth-Key: ${global_api_key}"\
-        -H "Content-Type: application/json"\
-        --data '{"type":"TXT","name":"'${prefix}${1}'","content":"'${3}'","ttl":120,"priority":10,"proxied":false}'\
-        -o "${hookDirectory}/${1}.txt" | jq -r '{"result"}[] | .[0] | .id'
+    if [ -z $api_token ]; then
+        # New-style API token not found, fall back to global API key
+        curl -X POST "https://api.cloudflare.com/client/v4/zones/${zones}/dns_records"\
+            -H "X-Auth-Email: ${email}"\
+            -H "X-Auth-Key: ${global_api_key}"\
+            -H "Content-Type: application/json"\
+            --data '{"type":"TXT","name":"'${prefix}${1}'","content":"'${3}'","ttl":120,"priority":10,"proxied":false}'\
+            -o "${hookDirectory}/${1}.txt" | jq -r '{"result"}[] | .[0] | .id'
+    else
+        curl -X POST "https://api.cloudflare.com/client/v4/zones/${zones}/dns_records"\
+            -H "Authorization: Bearer ${api_token}"\
+            -H "Content-Type: application/json"\
+            --data '{"type":"TXT","name":"'${prefix}${1}'","content":"'${3}'","ttl":120,"priority":10,"proxied":false}'\
+            -o "${hookDirectory}/${1}.txt" | jq -r '{"result"}[] | .[0] | .id'
+    fi
 
     # Add delay to get the new DNS record
     local DELAY=10;
@@ -82,10 +91,17 @@ clean_challenge() {
     printf "id: %s\n" "${id}"
 
 
-    curl -X DELETE "https://api.cloudflare.com/client/v4/zones/$zones/dns_records/${id}" \
-     -H "X-Auth-Email: ${email}"\
-     -H "X-Auth-Key: ${global_api_key}"\
-     -H "Content-Type: application/json"
+    if [ -z $api_token ]; then
+        # New-style API token not found, fall back to global API key
+        curl -X DELETE "https://api.cloudflare.com/client/v4/zones/$zones/dns_records/${id}" \
+         -H "X-Auth-Email: ${email}"\
+         -H "X-Auth-Key: ${global_api_key}"\
+         -H "Content-Type: application/json"
+    else
+        curl -X DELETE "https://api.cloudflare.com/client/v4/zones/$zones/dns_records/${id}" \
+         -H "Authorization: Bearer ${api_token}"\
+         -H "Content-Type: application/json"
+    fi
 
     rm "${hookDirectory}/${1}.txt"
 

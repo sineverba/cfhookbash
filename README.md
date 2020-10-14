@@ -63,7 +63,12 @@ home.example.net
 | Value          | Where to find |
 | -------------- | ------------- |
 | Zone ID        | Main page domain > Right Column > API section |
+| API Token      | Account > My Profile > API Tokens > Create Token |
 | Global API Key | Account > My Profile > API Tokens > Api Keys > Global API Key |
+
+You can choose between using an **API token** and using your **global API key**. It is preferred to create a token, since tokens can be restricted to just the permission to edit DNS records in chosen zones (the `DNS:Edit` permission).
+
+If you choose to use an API token, it must be filled into `api_token`. If you want to use your global API key, instead use `global_api_key` and `email`.
 
 ### Classic mode: Usage
 
