@@ -1,4 +1,9 @@
-# 4.0.0
+# 4.1.0
++ Update Docker instructions
++ Update error codes
++ Add support for using API tokens instead of email+global API key
+
+## 4.0.0
 
 ### Add
 + Add dependency for `jq`

@@ -19,5 +19,5 @@ push:
 destroy:
 		docker container stop cfhookbash
 		docker container rm cfhookbash
-		sudo rm -r certs/
+		# sudo rm -r certs/
 		docker image rm sineverba/cfhookbash:latest
