@@ -105,7 +105,7 @@ Following script will run every monday at 4AM and will create a log in home fold
 `$ sudo crontab -e`
 
 ``` shell
-0 4 * * 1 cd /home/YOUR_USER/dehydrated && /home/YOUR_USER/dehydrated/dehydrated -c -t dns-01 -k '/home/YOUR_USER/dehydrated/hooks/cfhookbash/hook.sh' >> /home/YOUR_USER/cfhookbash.log
+0 4 * * 1 cd /home/YOUR_USER/dehydrated && /home/YOUR_USER/dehydrated/dehydrated -c -t dns-01 -k '/home/YOUR_USER/cfhookbash/hook.sh' >> /home/YOUR_USER/cfhookbash.log
 ```
 
 #### Update / upgrade
