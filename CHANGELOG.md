@@ -1,4 +1,7 @@
-# 4.1.0
+# 4.1.1
++ Fix instructions for crontab
+
+## 4.1.0
 + Update Docker instructions
 + Update error codes
 + Add support for using API tokens instead of email+global API key
