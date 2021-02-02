@@ -1,4 +1,4 @@
-# Next version
+# 4.2.0
 + Add hook-chaining support
 + Improve logging/error messages
 
