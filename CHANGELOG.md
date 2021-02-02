@@ -1,4 +1,7 @@
-# 4.1.1
+# 4.1.2
++ Fix #72
+
+## 4.1.1
 + Fix instructions for crontab
 
 ## 4.1.0
