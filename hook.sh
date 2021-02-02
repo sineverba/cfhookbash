@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+#set -o xtrace
+set -o errexit
 
 prefix="_acme-challenge."
 
@@ -12,12 +14,9 @@ prefix="_acme-challenge."
 
 # see https://stackoverflow.com/questions/59895/how-to-get-the-source-directory-of-a-bash-script-from-within-the-script-itself
 hookDirectory=$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )
-configFile="${hookDirectory}/config.sh"
 
-
-
-deploy_challenge() {
-    local DOMAIN="${1}" TOKEN_FILENAME="${2}" TOKEN_VALUE="${3}"
+load_config() {
+    configFile="${hookDirectory}/config.sh"
 
     . "${configFile}"
     #if [[ -z "${ROOT_DIR}" ]];then
@@ -26,30 +25,28 @@ deploy_challenge() {
     #    hookDirectory="${ROOT_DIR}";
     #fi
 
+    api="https://api.cloudflare.com/client/v4/zones/${zones}/dns_records"
+
     if [ -z $api_token ]; then
         # New-style API token not found, fall back to global API key
-        curl -X POST "https://api.cloudflare.com/client/v4/zones/${zones}/dns_records"\
-            -H "X-Auth-Email: ${email}"\
-            -H "X-Auth-Key: ${global_api_key}"\
-            -H "Content-Type: application/json"\
-            --data '{"type":"TXT","name":"'${prefix}${1}'","content":"'${3}'","ttl":120,"priority":10,"proxied":false}'\
-            -o "${hookDirectory}/${1}.txt" | jq -r '{"result"}[] | .[0] | .id'
+        curlParams=("-s" "-H" "X-Auth-Email: ${email}" "-H" "X-Auth-Key: ${global_api_key}" "-H" "Content-Type: application/json" "$api")
     else
-        curl -X POST "https://api.cloudflare.com/client/v4/zones/${zones}/dns_records"\
-            -H "Authorization: Bearer ${api_token}"\
-            -H "Content-Type: application/json"\
-            --data '{"type":"TXT","name":"'${prefix}${1}'","content":"'${3}'","ttl":120,"priority":10,"proxied":false}'\
-            -o "${hookDirectory}/${1}.txt" | jq -r '{"result"}[] | .[0] | .id'
+        curlParams=("-s" "-H" "Authorization: Bearer ${api_token}" "-H" "Content-Type: application/json" "$api")
     fi
+}
+
+
+
+deploy_challenge() {
+    local DOMAIN="${1}" TOKEN_FILENAME="${2}" TOKEN_VALUE="${3}" curlParams
+    load_config "$DOMAIN" #curlParams
+
+    curl "${curlParams[@]}" --data '{"type":"TXT","name":"'${prefix}${DOMAIN}'","content":"'${TOKEN_VALUE}'","ttl":120,"priority":10,"proxied":false}'
 
     # Add delay to get the new DNS record
     local DELAY=10;
     echo "+++ Wait for ${DELAY} seconds. +++";
-    while [ $DELAY -gt 0 ]; do
-        sleep 1;
-       : $((DELAY--))
-    done
-
+    sleep "${DELAY}"
 
     # This hook is called once for every domain that needs to be
     # validated, including any alternative names you may have listed.
@@ -73,37 +70,15 @@ deploy_challenge() {
 }
 
 clean_challenge() {
-    local DOMAIN="${1}" TOKEN_FILENAME="${2}" TOKEN_VALUE="${3}"
+    local DOMAIN="${1}" TOKEN_FILENAME="${2}" TOKEN_VALUE="${3}" curlParams
+    load_config "$DOMAIN" curlParams
 
-    . "${configFile}"
+    record_ids=$( curl "${curlParams[@]}" -G -d 'match=all' -d 'per_page=100' -d 'type=TXT' -d "name=${FQDN}" | jq -r '.result | .[] | .id' )
 
-    # key_value=$(grep -Po '"id":.*?[^\\]"' "${hookDirectory}/${1}.txt")
-    #cat "${hookDirectory}/${1}.txt"
-    #key_value=$(grep -oP '(?<="id": ")[^"]*' "${hookDirectory}/${1}.txt")
-    key_value=$(cat "${hookDirectory}/${1}.txt" | jq -r '.result.id')
-    #printf "id: %s\n" "${key_value}"
-    #Remove first 6 occurence
-    #id="${key_value:6}"
-    #printf "id: %s\n" "${id}"
-    #Remove last char
-    #id="${id::-1}"
-    id="${key_value}"
-    printf "id: %s\n" "${id}"
-
-
-    if [ -z $api_token ]; then
-        # New-style API token not found, fall back to global API key
-        curl -X DELETE "https://api.cloudflare.com/client/v4/zones/$zones/dns_records/${id}" \
-         -H "X-Auth-Email: ${email}"\
-         -H "X-Auth-Key: ${global_api_key}"\
-         -H "Content-Type: application/json"
-    else
-        curl -X DELETE "https://api.cloudflare.com/client/v4/zones/$zones/dns_records/${id}" \
-         -H "Authorization: Bearer ${api_token}"\
-         -H "Content-Type: application/json"
-    fi
-
-    rm "${hookDirectory}/${1}.txt"
+    for id in ${record_ids};
+    do
+        curl -X DELETE "${curlParams[@]}/${id}"
+    done
 
     # This hook is called after attempting to validate each domain,
     # whether or not validation was successful. Here you can delete
