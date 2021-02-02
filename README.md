@@ -127,6 +127,7 @@ Everyone is welcome to contribute! See `CONTRIBUTING.md`
 + YasharF
 + Ramblurr
 + Dav999-v
++ fallingcats
 
 Inspired by
 + [https://www.splitbrain.org/blog/2017-08/10-homeassistant_duckdns_letsencrypt](https://www.splitbrain.org/blog/2017-08/10-homeassistant_duckdns_letsencrypt)
