@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
-#set -o xtrace
 set -o errexit
+set -o pipefail
+set -o nounset
+shopt -s lastpipe
 
 prefix="_acme-challenge."
 
@@ -36,12 +38,43 @@ load_config() {
 }
 
 
+check_status() {
+    readarray response
+    status=$(echo "${response[@]}"| jq -r '.success')
+
+    if [[ "$status" != 'true' ]]
+    then
+        if [[ "$status" == 'false' ]]
+        then
+            echo "${response[@]}" | jq -r '.errors | .[] | .message' | while read line
+            do
+                echo '!!! ERROR: '"$line"
+            done
+        else
+            echo "${response[@]}"
+        fi
+    fi
+}
+
 
 deploy_challenge() {
-    local DOMAIN="${1}" TOKEN_FILENAME="${2}" TOKEN_VALUE="${3}" curlParams
-    load_config "$DOMAIN" #curlParams
+    if (( $# % 3 != 0 ))
+    then
+        echo "!!! Invalid number of arguments"
+        exit 1
+    fi
 
-    curl "${curlParams[@]}" --data '{"type":"TXT","name":"'${prefix}${DOMAIN}'","content":"'${TOKEN_VALUE}'","ttl":120,"priority":10,"proxied":false}'
+    while(( $# > 0))
+    do
+        local DOMAIN="${1}" TOKEN_FILENAME="${2}" TOKEN_VALUE="${3}" curlParams
+        load_config "$DOMAIN"
+
+        echo "   - Setting up token for ${DOMAIN}"
+
+        local DATA='{"type":"TXT","name":"'${prefix}${DOMAIN}'","content":"'${TOKEN_VALUE}'","ttl":120,"priority":10,"proxied":false}'
+        curl "${curlParams[@]}" --data "${DATA}" | check_status
+        shift 3
+    done
 
     # Add delay to get the new DNS record
     local DELAY=10;
@@ -70,15 +103,30 @@ deploy_challenge() {
 }
 
 clean_challenge() {
-    local DOMAIN="${1}" TOKEN_FILENAME="${2}" TOKEN_VALUE="${3}" curlParams
-    load_config "$DOMAIN" curlParams
+    if (( $# % 3 != 0 ))
+    then
+        echo "!!! Invalid number of arguments"
+        exit 1
+    fi
 
-    record_ids=$( curl "${curlParams[@]}" -G -d 'match=all' -d 'per_page=100' -d 'type=TXT' -d "name=${FQDN}" | jq -r '.result | .[] | .id' )
-
-    for id in ${record_ids};
+    while(( $# > 0))
     do
-        curl -X DELETE "${curlParams[@]}/${id}"
+        local DOMAIN="${1}" TOKEN_FILENAME="${2}" TOKEN_VALUE="${3}" curlParams response
+        load_config "$DOMAIN" curlParams
+
+        curl "${curlParams[@]}" -G -d 'match=all' -d 'per_page=100' -d 'type=TXT' -d "name=${prefix}${DOMAIN}" | readarray response
+        echo "${response[@]}" | check_status
+
+        record_ids=$( echo "${response[@]}" | jq -r '.result | .[] | .id' )
+        for id in ${record_ids};
+        do
+            echo "   - Removing token for ${DOMAIN}"
+            curl -X DELETE "${curlParams[@]}/${id}" | check_status
+        done
+
+        shift 3
     done
+
 
     # This hook is called after attempting to validate each domain,
     # whether or not validation was successful. Here you can delete

@@ -49,11 +49,11 @@ git clone https://github.com/sineverba/cfhookbash.git
 ### Classic mode: Configuration
 
 1. Create a file `domains.txt` **in the folder of `dehydrated`**
-2. Put inside a list (one for line) of domains that need certificates.
+2. Put inside a list of domains that need certificates. Multiple (sub)domains on a single line will end up on a single certificate. 
 
 ``` shell
-www.example.com
-home.example.net
+example.com www.example.com
+home.example.net *.home.example.net
 [...]
 ```
 3. Move to the folder of `cfhookbash`
@@ -81,6 +81,8 @@ Make a first run with `CA="https://acme-staging-v02.api.letsencrypt.org/director
 ```
 
 You will find the certificates inside `~/dehydrated/certs/[your.domain.name]`.
+If you are using dehydrated with a config file and, you can speed up the requests for certificates with multiple (sub)domains by using `HOOK_CHAIN="yes"`.
+
 
 ### Classic mode: Post deploy
 You can find in `hook.sh` a recall to another file (`deploy.sh`).
@@ -91,7 +93,7 @@ There is a stub file `deploy.config.sh`.
 Usage:
 
 ``` shell
-copy deploy.config.sh deploy.sh && rm deploy.config.sh && nano deploy.sh
+cp deploy.config.sh deploy.sh && rm deploy.config.sh && nano deploy.sh
 ```
 
 ### Classic mode: Cronjob
@@ -114,10 +116,11 @@ Following script will run every monday at 4AM and will create a log in home fold
 
 #### Commons error messages
 
-| Error | Body | Solution |
-| ----- | ---- | -------- |
-| 7003  | `{ "code": 7003, "message": "Could not route to /zones/dns_records, perhaps your object identifier is invalid?" }, { "code": 7000, "message": "No route for that URI" }` | Check your `Zone ID` value. Probably is wrong.
-| 1001  | `method_not_allowed` | Install `jq` (`sudo apt install jq`) and upgrade script (`git pull`) |
+| Error | Solution |
+| ----- | -------- |
+| Could not route to /zones/dns_records, perhaps your object identifier is invalid? No route for that URI | Check your `Zone ID` value. There probably is something wrong. |
+| /home/YOUR_USER/cfhookbash/hook.sh: line XX: jq: command not found | Install `jq` (`sudo apt install jq`) and try again |
+| {"code": 1001, "error": "method_not_allowed"} | Update this script by running `git pull` |
 
 ### Contributing
 Everyone is welcome to contribute! See `CONTRIBUTING.md`
