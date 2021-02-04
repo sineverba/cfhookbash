@@ -1,4 +1,7 @@
-# 4.3.0
+# Next version
++ Remove force renew from Docker
+
+## 4.3.0
 + Remove Docker implementation (not completed)
 + Remove config folder (for old Docker)
 + Add Dockerfile
