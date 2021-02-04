@@ -1,4 +1,7 @@
-# 4.2.0
+# Next version
++ Remove Docker implementation (not completed)
+
+## 4.2.0
 + Add hook-chaining support
 + Improve logging/error messages
 

@@ -1,7 +1,5 @@
 os: linux
-
 dist: bionic
-
 language: shell
 
 env:
@@ -10,27 +8,12 @@ env:
 
 before_install:
   - export VCS_REF=$(git rev-parse --short HEAD)
-  - |
-    if [[ $TRAVIS_BRANCH == "master" || $TRAVIS_BRANCH == "develop" || $TRAVIS_TAG != "" ]]; then
-      chmod +x ./.deploy/scripts/build.sh
-      chmod +x ./.deploy/scripts/test.sh
-      chmod +x ./.deploy/scripts/deploy.sh
-    fi
 
 install:
-  - |
-    if [[ $TRAVIS_BRANCH == "master" || $TRAVIS_BRANCH == "develop" || $TRAVIS_TAG != "" ]]; then
-    ./.deploy/scripts/build.sh
-    fi
+  - echo "install"
 
 script:
-  - |
-    if [[ $TRAVIS_BRANCH == "master" || $TRAVIS_BRANCH == "develop" || $TRAVIS_TAG != "" ]]; then
-      ./.deploy/scripts/test.sh
-    fi
+  - echo "script"
 
 after_success:
-  - |
-    if [[ $TRAVIS_TAG != "" ]]; then
-    ./.deploy/scripts/deploy.sh
-    fi
+  - echo "after success"
