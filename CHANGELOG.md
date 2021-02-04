@@ -1,6 +1,7 @@
 # Next version
 + Remove Docker implementation (not completed)
 + Remove config folder (for old Docker)
++ Add Dockerfile
 
 ## 4.2.0
 + Add hook-chaining support
