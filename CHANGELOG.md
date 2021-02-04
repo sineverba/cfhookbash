@@ -1,4 +1,7 @@
-# 4.4.0
+# Next version
++ Rearrange instructions (for Docker)
+
+## 4.4.0
 + Remove force renew from Docker
 + Set force renew as environment variable
 
