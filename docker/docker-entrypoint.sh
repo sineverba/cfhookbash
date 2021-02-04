@@ -35,4 +35,4 @@ if [ ! -d "$ACCOUNTS_DIR" ]; then
     ./app/dehydrated/dehydrated --register --accept-terms
     exit
 fi
-./app/dehydrated/dehydrated -c -t dns-01 -k '/app/dehydrated/hook.sh' -x
+./app/dehydrated/dehydrated -c -t dns-01 -k '/app/dehydrated/hook.sh'
