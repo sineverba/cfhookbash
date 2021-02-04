@@ -1,4 +1,4 @@
-# Next version
+# 4.3.0
 + Remove Docker implementation (not completed)
 + Remove config folder (for old Docker)
 + Add Dockerfile
