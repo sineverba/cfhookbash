@@ -139,7 +139,7 @@ Inspired by
 ## Docker version
 
 + Pull from Docker Hub: `docker pull sineverba/cfhookbash`
-+ Make a first run, it will create the correct directories and files:
++ Make a first run, it will auto-register and will create the correct directories and files:
 
 ```shell
 $ docker run -it --rm -v $(pwd)/data:/app/dehydrated --name cfhookbash sineverba/cfhookbash:latest
@@ -150,4 +150,12 @@ $ docker run -it --rm -v $(pwd)/data:/app/dehydrated --name cfhookbash sineverba
 ```shell
 $ docker run -it --rm -v $(pwd)/data:/app/dehydrated --name cfhookbash sineverba/cfhookbash:latest
 ```
+
++ To force renew, pass the `ENV VAR` `FORCE_RENEW=TRUE` (caps lock for TRUE)
+
+```shell
+$ docker run -it --rm -v $(pwd)/data:/app/dehydrated -e FORCE_RENEW=TRUE --name cfhookbash sineverba/cfhookbash:latest
+```
+
++ If you launch docker with stage url, removing it LE blocks you, requesting to re-register. Simply delete the `data/accounts` folder and relaunch (2 times) the docker.
 
