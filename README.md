@@ -131,3 +131,19 @@ Everyone is welcome to contribute! See `CONTRIBUTING.md`
 Inspired by
 + [https://www.splitbrain.org/blog/2017-08/10-homeassistant_duckdns_letsencrypt](https://www.splitbrain.org/blog/2017-08/10-homeassistant_duckdns_letsencrypt)
 + [https://github.com/kappataumu/letsencrypt-Cloudflare-hook](https://github.com/kappataumu/letsencrypt-Cloudflare-hook)
+
+## Docker version
+
++ Pull from Docker Hub:
++ Make a first run, it will create the correct directories and files:
+
+```shell
+$ docker run -it --rm -v $(pwd)/data:/app/dehydrated --name cfhookbash sineverba/cfhookbash:latest
+```
++ Edit `data/config`, `data/config.sh` and `data/domains.txt`
++ Rerun:
+
+```shell
+$ docker run -it --rm -v $(pwd)/data:/app/dehydrated --name cfhookbash sineverba/cfhookbash:latest
+```
+
