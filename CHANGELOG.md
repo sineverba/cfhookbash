@@ -1,4 +1,8 @@
-# 4.3.0
+# 4.4.0
++ Remove force renew from Docker
++ Set force renew as environment variable
+
+## 4.3.0
 + Remove Docker implementation (not completed)
 + Remove config folder (for old Docker)
 + Add Dockerfile

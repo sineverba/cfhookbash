@@ -35,4 +35,11 @@ if [ ! -d "$ACCOUNTS_DIR" ]; then
     ./app/dehydrated/dehydrated --register --accept-terms
     exit
 fi
-./app/dehydrated/dehydrated -c -t dns-01 -k '/app/dehydrated/hook.sh' -x
+
+RENEW_OPT=
+if [ "$FORCE_RENEW" == TRUE ]; then
+    RENEW_OPT=-x
+fi
+./app/dehydrated/dehydrated -c -t dns-01 -k '/app/dehydrated/hook.sh' $RENEW_OPT
+
+exec "$@"
