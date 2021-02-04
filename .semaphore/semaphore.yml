@@ -27,7 +27,7 @@ blocks:
         - name: 'Build and test'
           commands:
             - checkout
-            - docker build --tag $DOCKER_USERNAME/$DOCKER_IMAGE .
+            - docker build --tag $DOCKER_USERNAME/$DOCKER_IMAGE --file ./docker/Dockerfile .
             - docker run -it --rm --name cfhookbash $DOCKER_USERNAME/$DOCKER_IMAGE | grep "Using main config file /app/dehydrated/config"
             - docker run -it --rm --name cfhookbash $DOCKER_USERNAME/$DOCKER_IMAGE | grep "Registering account"
 

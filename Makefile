@@ -2,7 +2,7 @@ build:
 	docker build --tag sineverba/cfhookbash:latest --file ./docker/Dockerfile .
 
 multi:
-	docker buildx build --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7 --tag sineverba/cfhookbash:latest --file ./docker/Dockerfile .
+	docker buildx build --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7 --tag sineverba/cfhookbash:latest --file ./docker/Dockerfile . --push
 
 run:
 	#docker run -it -v ${PWD}/certs:/certs -v ${PWD}/config:/config --name cfhookbash sineverba/cfhookbash:latest

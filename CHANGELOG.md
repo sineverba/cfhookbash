@@ -4,6 +4,7 @@
 + Add Dockerfile
 + Add instructions for Docker
 + Add semaphore
++ Fix semaphore
 
 ## 4.2.0
 + Add hook-chaining support
