@@ -5,10 +5,6 @@ Cloudflare dns-01 challenge hook bash for dehydrated
 
 Cloudflare Bash hook for [dehydrated](https://github.com/lukas2511/dehydrated).
 
-| CI / CD | Status |
-| ------- | ------ |
-| Travis  | [![Build Status](https://travis-ci.com/sineverba/cfhookbash.svg?branch=master)](https://travis-ci.com/sineverba/cfhookbash) |
-| Docker  | [![](https://images.microbadger.com/badges/image/sineverba/cfhookbash.svg)](https://microbadger.com/images/sineverba/cfhookbash "Get your own image badge on microbadger.com") |
 
 ## Why Cloudflare? What is this script?
 
@@ -135,29 +131,3 @@ Everyone is welcome to contribute! See `CONTRIBUTING.md`
 Inspired by
 + [https://www.splitbrain.org/blog/2017-08/10-homeassistant_duckdns_letsencrypt](https://www.splitbrain.org/blog/2017-08/10-homeassistant_duckdns_letsencrypt)
 + [https://github.com/kappataumu/letsencrypt-Cloudflare-hook](https://github.com/kappataumu/letsencrypt-Cloudflare-hook)
-
-----------------------------------------------------
-
-### Docker mode - beware! Not stable and under development!
-+ Make a new dir (e.g. `mkdir -p /home/$USER/cfhookbashdocker`)
-+ Create a `certs` folder
-+ Create one or more folders with name of domain in `certs` (e.g. `certs/example.com` and `certs/test.example.com`)
-+ Create a `config` folder
-+ Create a `config.sh` file in `/config/` and fill it (see below how to get data)
-+ Create a `domains.txt` file in `/config/` and insert a domain for every line
-+ Make a first run in stage mode: create a `config` file under `/config` with this content `CA="https://acme-staging-v02.api.letsencrypt.org/directory"`
-
-Run
-
-``` shell
-docker run -it \
-  -v ${PWD}/certs:/certs \
-  -v ${PWD}/config:/config \
-  --name cfhookbash \
-  sineverba/cfhookbash:latest
-```
-
-+ Certs will be available in `/certs`
-+ Docker run a cronjob every minute
-
--------------------------------------------------------
