@@ -1,9 +1,16 @@
 build:
-	docker build --tag sineverba/cfhookbash:latest --build-arg VCS_REF=`git rev-parse --short HEAD` --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` --file ./docker/Dockerfile .
+	docker build --tag sineverba/cfhookbash:latest --file ./docker/Dockerfile .
+
+multi:
+	docker buildx build --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7 --tag sineverba/cfhookbash:latest --file ./docker/Dockerfile .
 
 run:
 	#docker run -it -v ${PWD}/certs:/certs -v ${PWD}/config:/config --name cfhookbash sineverba/cfhookbash:latest
 	docker run -it --rm --name cfhookbash sineverba/cfhookbash:latest
+
+test:
+	docker run -it --rm --name cfhookbash sineverba/cfhookbash:latest | grep "INFO: Using main config file /app/dehydrated/config"
+	docker run -it --rm --name cfhookbash sineverba/cfhookbash:latest | grep "Registering account"
 
 inspect:
 	#docker run -it --entrypoint "/bin/bash" -v ${PWD}/certs:/certs -v ${PWD}/config:/config cfhookbash

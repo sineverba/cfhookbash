@@ -1,12 +1,4 @@
-
 FROM alpine:3.13.1
-
-ARG VCS_REF
-ARG BUILD_DATE
-
-LABEL org.label-schema.vcs-ref=$VCS_REF \
-      org.label-schema.vcs-url="https://github.com/sineverba/cfhookbash" \
-      org.label-schema.build-date=$BUILD_DATE
 
 RUN apk add --no-cache bash curl jq openssl --upgrade grep
 

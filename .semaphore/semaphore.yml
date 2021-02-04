@@ -1,0 +1,41 @@
+version: v1.0
+
+name: Build and test Pipeline
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+
+global_job_config:
+
+  prologue:
+    commands:
+      - echo $DOCKER_TOKEN | docker login --username "$DOCKER_USERNAME" --password-stdin
+
+  env_vars:
+    - name: DOCKER_USERNAME
+      value: sineverba
+    - name: DOCKER_IMAGE
+      value: cfhookbash
+
+blocks:
+  - name: 'Build and test'
+    skip:
+      when: "tag =~ '.*'"
+    task:
+      jobs:
+        - name: 'Build and test'
+          commands:
+            - checkout
+            - docker build --tag $DOCKER_USERNAME/$DOCKER_IMAGE .
+            - docker run -it --rm --name cfhookbash $DOCKER_USERNAME/$DOCKER_IMAGE | grep "Using main config file /app/dehydrated/config"
+            - docker run -it --rm --name cfhookbash $DOCKER_USERNAME/$DOCKER_IMAGE | grep "Registering account"
+
+      secrets:
+        - name: DOCKER_TOKEN
+
+promotions:
+  - name: Deploy
+    pipeline_file: deploy.yml
+    auto_promote:
+      when: "result = 'passed' and tag =~ '.*'"

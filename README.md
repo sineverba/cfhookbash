@@ -1,6 +1,10 @@
 Cloudflare dns-01 challenge hook bash for dehydrated
 ====================================================
 
+| CD / CI   |           |
+| --------- | --------- |
+| Semaphore CI | [![Build Status](https://sineverba.semaphoreci.com/badges/cfhookbash/branches/master.svg)](https://sineverba.semaphoreci.com/projects/cfhookbash) |
+
 **If you like this project, or use it, please, star it!**
 
 Cloudflare Bash hook for [dehydrated](https://github.com/lukas2511/dehydrated).
@@ -134,7 +138,7 @@ Inspired by
 
 ## Docker version
 
-+ Pull from Docker Hub:
++ Pull from Docker Hub: `docker pull sineverba/cfhookbash`
 + Make a first run, it will create the correct directories and files:
 
 ```shell

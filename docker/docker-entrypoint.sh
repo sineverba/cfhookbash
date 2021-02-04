@@ -33,5 +33,6 @@ fi
 if [ ! -d "$ACCOUNTS_DIR" ]; then
     echo "Registering account"
     ./app/dehydrated/dehydrated --register --accept-terms
+    exit
 fi
 ./app/dehydrated/dehydrated -c -t dns-01 -k '/app/dehydrated/hook.sh' -x
