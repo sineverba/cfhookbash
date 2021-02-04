@@ -7,7 +7,7 @@ env:
   DOCKER_IMAGE: cfhookbash
 
 before_install:
-  - export VCS_REF=$(git rev-parse --short HEAD)
+  - echo "before install"
 
 install:
   - echo "install"
