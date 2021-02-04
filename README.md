@@ -9,6 +9,8 @@ Cloudflare dns-01 challenge hook bash for dehydrated
 
 Cloudflare Bash hook for [dehydrated](https://github.com/lukas2511/dehydrated).
 
+For Docker version usage, see [wiki](https://github.com/sineverba/cfhookbash/wiki/Docker-usage)
+
 
 ## Why Cloudflare? What is this script?
 
@@ -135,27 +137,3 @@ Everyone is welcome to contribute! See `CONTRIBUTING.md`
 Inspired by
 + [https://www.splitbrain.org/blog/2017-08/10-homeassistant_duckdns_letsencrypt](https://www.splitbrain.org/blog/2017-08/10-homeassistant_duckdns_letsencrypt)
 + [https://github.com/kappataumu/letsencrypt-Cloudflare-hook](https://github.com/kappataumu/letsencrypt-Cloudflare-hook)
-
-## Docker version
-
-+ Pull from Docker Hub: `docker pull sineverba/cfhookbash`
-+ Make a first run, it will auto-register and will create the correct directories and files:
-
-```shell
-$ docker run -it --rm -v $(pwd)/data:/app/dehydrated --name cfhookbash sineverba/cfhookbash:latest
-```
-+ Edit `data/config`, `data/config.sh` and `data/domains.txt`
-+ Rerun:
-
-```shell
-$ docker run -it --rm -v $(pwd)/data:/app/dehydrated --name cfhookbash sineverba/cfhookbash:latest
-```
-
-+ To force renew, pass the `ENV VAR` `FORCE_RENEW=TRUE` (caps lock for TRUE)
-
-```shell
-$ docker run -it --rm -v $(pwd)/data:/app/dehydrated -e FORCE_RENEW=TRUE --name cfhookbash sineverba/cfhookbash:latest
-```
-
-+ If you launch docker with stage url, removing it LE blocks you, requesting to re-register. Simply delete the `data/accounts` folder and relaunch (2 times) the docker.
-
