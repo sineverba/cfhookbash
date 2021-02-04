@@ -1,4 +1,12 @@
-# 4.2.0
+# 4.3.0
++ Remove Docker implementation (not completed)
++ Remove config folder (for old Docker)
++ Add Dockerfile
++ Add instructions for Docker
++ Add semaphore
++ Fix semaphore
+
+## 4.2.0
 + Add hook-chaining support
 + Improve logging/error messages
 

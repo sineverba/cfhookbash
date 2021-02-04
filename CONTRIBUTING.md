@@ -26,6 +26,7 @@ We accept contributions via Pull Requests.
 
    - Create a branch `feature-myawesomefeature` or `hotfix-myhotfix` from `develop`
    - Push your branch against `develop` branch.
+   - Update `CHANGELOG.md` under a `#Next version` section
 
 - **One pull request per feature** - If you want to do more than one thing, send multiple pull requests.
 

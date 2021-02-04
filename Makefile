@@ -1,23 +1,20 @@
 build:
-		@docker build --tag sineverba/cfhookbash:latest --build-arg VCS_REF=`git rev-parse --short HEAD` --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` --file ./docker/Dockerfile .
+	docker build --tag sineverba/cfhookbash:latest --file ./docker/Dockerfile .
+
+multi:
+	docker buildx build --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7 --tag sineverba/cfhookbash:latest --file ./docker/Dockerfile . --push
 
 run:
-		@docker run -it -v ${PWD}/certs:/certs -v ${PWD}/config:/config --name cfhookbash sineverba/cfhookbash:latest
+	#docker run -it -v ${PWD}/certs:/certs -v ${PWD}/config:/config --name cfhookbash sineverba/cfhookbash:latest
+	docker run -it --rm --name cfhookbash sineverba/cfhookbash:latest
 
 test:
-		docker run -dit -v ${PWD}/certs:/certs -v ${PWD}/config:/config --name cfhookbash --entrypoint=/bin/sh sineverba/cfhookbash:latest
-		docker exec -it cfhookbash cat /dehydrated/dehydrated | grep 0.6.5
-		docker container stop cfhookbash
-		docker container rm cfhookbash
+	docker run -it --rm --name cfhookbash sineverba/cfhookbash:latest | grep "INFO: Using main config file /app/dehydrated/config"
+	docker run -it --rm --name cfhookbash sineverba/cfhookbash:latest | grep "Registering account"
 
 inspect:
-		docker run -it --entrypoint "/bin/bash" -v ${PWD}/certs:/certs -v ${PWD}/config:/config cfhookbash
-
-push:
-		docker push sineverba/cfhookbash:latest
+	#docker run -it --entrypoint "/bin/bash" -v ${PWD}/certs:/certs -v ${PWD}/config:/config cfhookbash
+	docker run -it --entrypoint "/bin/bash" cfhookbash
 
 destroy:
-		docker container stop cfhookbash
-		docker container rm cfhookbash
-		# sudo rm -r certs/
-		docker image rm sineverba/cfhookbash:latest
+	docker image rm sineverba/cfhookbash:latest
