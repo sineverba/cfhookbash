@@ -1,5 +1,6 @@
 # Next version
 + Rearrange instructions (for Docker)
++ Add `linux/arm64` architecture
 
 ## 4.4.0
 + Remove force renew from Docker
