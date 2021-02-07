@@ -1,4 +1,4 @@
-FROM alpine:3.13.1
+FROM alpine:3.12.3
 
 RUN apk add --no-cache bash curl jq openssl --upgrade grep
 
