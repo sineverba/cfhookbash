@@ -1,7 +1,8 @@
-# Next version
+# 4.5.0
 + Rearrange instructions (for Docker)
 + Add `linux/arm64` architecture
 + Add date to log
++ Fix Alpine network issue (@see https://github.com/loomchild/volume-backup/issues/34 and https://github.com/alpinelinux/docker-alpine/issues/135)
 
 ## 4.4.0
 + Remove force renew from Docker
