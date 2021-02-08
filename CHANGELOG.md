@@ -1,4 +1,7 @@
-# 4.5.0
+# Next version
++ Fix Cron output
+
+## 4.5.0
 + Rearrange instructions (for Docker)
 + Add `linux/arm64` architecture
 + Add date to log
