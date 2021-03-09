@@ -1,5 +1,6 @@
 # Next version
 + Fix Cron output
++ Remove Travis and add Circle CI
 
 ## 4.5.0
 + Rearrange instructions (for Docker)
