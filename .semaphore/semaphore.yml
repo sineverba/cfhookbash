@@ -8,10 +8,6 @@ agent:
 
 global_job_config:
 
-  prologue:
-    commands:
-      - echo $DOCKER_TOKEN | docker login --username "$DOCKER_USERNAME" --password-stdin
-
   env_vars:
     - name: DOCKER_USERNAME
       value: sineverba
@@ -30,9 +26,6 @@ blocks:
             - docker build --tag $DOCKER_USERNAME/$DOCKER_IMAGE --file ./docker/Dockerfile .
             - docker run -it --rm --name cfhookbash $DOCKER_USERNAME/$DOCKER_IMAGE | grep "Using main config file /app/dehydrated/config"
             - docker run -it --rm --name cfhookbash $DOCKER_USERNAME/$DOCKER_IMAGE | grep "Registering account"
-
-      secrets:
-        - name: DOCKER_TOKEN
 
 promotions:
   - name: Deploy
