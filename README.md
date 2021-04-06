@@ -7,7 +7,7 @@ Cloudflare dns-01 challenge hook bash for dehydrated
 
 **If you like this project, or use it, please, star it!**
 
-Cloudflare Bash hook for [dehydrated](https://github.com/lukas2511/dehydrated).
+Cloudflare Bash hook for [dehydrated](https://github.com/dehydrated-io/dehydrated).
 
 ## Docker version
 
@@ -21,7 +21,7 @@ If you cannot solve the `HTTP-01` challenge, you need to solve the DNS-01 challe
 With use of Cloudflare API (valid also on free plan!), this script will verify your domain putting a new record with a special token inside DNS zone.
 At the end of Let's Encrypt validation, that record will be deleted.
 
-Depends on `jq`: `sudo apt get install -y jq`
+Depends on `jq`: `sudo apt install -y jq`
 
 You only need:
 
