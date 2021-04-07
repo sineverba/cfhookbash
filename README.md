@@ -4,10 +4,11 @@ Cloudflare dns-01 challenge hook bash for dehydrated
 | CD / CI   |           |
 | --------- | --------- |
 | Semaphore CI | [![Build Status](https://sineverba.semaphoreci.com/badges/cfhookbash/branches/master.svg)](https://sineverba.semaphoreci.com/projects/cfhookbash) |
+| Circle CI | [![CircleCI](https://circleci.com/gh/sineverba/cfhookbash.svg?style=svg)](https://circleci.com/gh/sineverba/cfhookbash) |
 
 **If you like this project, or use it, please, star it!**
 
-Cloudflare Bash hook for [dehydrated](https://github.com/lukas2511/dehydrated).
+Cloudflare Bash hook for [dehydrated](https://github.com/dehydrated-io/dehydrated).
 
 ## Docker version
 
@@ -21,7 +22,7 @@ If you cannot solve the `HTTP-01` challenge, you need to solve the DNS-01 challe
 With use of Cloudflare API (valid also on free plan!), this script will verify your domain putting a new record with a special token inside DNS zone.
 At the end of Let's Encrypt validation, that record will be deleted.
 
-Depends on `jq`: `sudo apt get install -y jq`
+Depends on `jq`: `sudo apt install -y jq`
 
 You only need:
 
@@ -111,7 +112,7 @@ Following script will run every monday at 4AM and will create a log in home fold
 `$ sudo crontab -e`
 
 ``` shell
-0 4 * * 1 cd /home/YOUR_USER/dehydrated && /home/YOUR_USER/dehydrated/dehydrated -c -t dns-01 -k '/home/YOUR_USER/cfhookbash/hook.sh' >> /home/YOUR_USER/"cfhookbash-$(date +'%Y-%m-%d-%H-%M-%S').log"
+0 4 * * 1 cd /home/<USER>/dehydrated && /home/<USER>/dehydrated/dehydrated -c -t dns-01 -k '/home/<USER>/cfhookbash/hook.sh' >> /home/<USER>/cfhookbash-`date +\%Y-\%m-\%d-\%H-\%M-\%S`.log 2>&1
 ```
 
 #### Update / upgrade
@@ -135,6 +136,7 @@ Everyone is welcome to contribute! See `CONTRIBUTING.md`
 + Ramblurr
 + Dav999-v
 + fallingcats
++ simondeziel
 
 Inspired by
 + [https://www.splitbrain.org/blog/2017-08/10-homeassistant_duckdns_letsencrypt](https://www.splitbrain.org/blog/2017-08/10-homeassistant_duckdns_letsencrypt)
