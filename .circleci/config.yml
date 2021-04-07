@@ -14,8 +14,9 @@ workflows:
   version: 2
   tests:
     jobs:
-      - test:
-          filters:
-            branches:
-              only:
-                - develop
+      - test
+      #- test:
+      #    filters:
+      #      branches:
+      #        only:
+      #          - develop
