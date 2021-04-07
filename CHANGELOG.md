@@ -3,6 +3,7 @@
 + Remove Travis and add Circle CI
 + Enable CircleCI
 + Fix documentation
++ Fix CircleCI badge
 
 ## 4.5.0
 + Rearrange instructions (for Docker)
