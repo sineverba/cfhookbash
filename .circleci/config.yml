@@ -1,0 +1,22 @@
+version: 2.1
+jobs:
+  test:
+    docker:
+      - image: cimg/base:2021.03-20.04
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run: docker build --tag test-image --file ./docker/Dockerfile .
+      - run: docker run -it --rm --name cfhookbash test-image | grep "Using main config file /app/dehydrated/config"
+      - run: docker run -it --rm --name cfhookbash test-image | grep "Registering account"
+
+workflows:
+  version: 2
+  tests:
+    jobs:
+      - test
+      #- test:
+      #    filters:
+      #      branches:
+      #        only:
+      #          - develop

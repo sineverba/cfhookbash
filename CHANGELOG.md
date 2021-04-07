@@ -1,4 +1,11 @@
-# 4.5.0
+# Next version
++ Fix Cron output
++ Remove Travis and add Circle CI
++ Enable CircleCI
++ Fix documentation
++ Fix CircleCI badge
+
+## 4.5.0
 + Rearrange instructions (for Docker)
 + Add `linux/arm64` architecture
 + Add date to log
