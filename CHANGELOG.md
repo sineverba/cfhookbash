@@ -4,6 +4,7 @@
 + Enable CircleCI
 + Fix documentation
 + Fix CircleCI badge
++ Update license year (yes, this project is alive!)
 
 ## 4.5.0
 + Rearrange instructions (for Docker)
