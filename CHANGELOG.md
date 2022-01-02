@@ -1,4 +1,4 @@
-# Next version
+# 4.6.0
 + Fix Cron output
 + Remove Travis and add Circle CI
 + Enable CircleCI
