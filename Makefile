@@ -1,20 +1,29 @@
+APP_VERSION=4.5.0
+BUILDX_VERSION=0.7.1
+
+
 build:
-	docker build --tag sineverba/cfhookbash:latest --file ./docker/Dockerfile .
+	docker build --tag sineverba/cfhookbash-dev:$(APP_VERSION) --file ./docker/Dockerfile .
 
 multi:
-	docker buildx build --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64 --tag sineverba/cfhookbash:latest --file ./docker/Dockerfile . --push
+	mkdir -vp ~/.docker/cli-plugins/
+	curl --silent -L "https://github.com/docker/buildx/releases/download/v$(BUILDX_VERSION)/buildx-v$(BUILDX_VERSION).linux-amd64" > ~/.docker/cli-plugins/docker-buildx
+	chmod a+x ~/.docker/cli-plugins/docker-buildx
+	docker buildx version
+	docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+	docker buildx create --name alfa && docker buildx use alfa && docker buildx inspect --bootstrap
+	docker buildx build --tag sineverba/cfhookbash-dev:latest --tag sineverba/cfhookbash-dev:$(APP_VERSION) --platform linux/amd64,linux/armhf,linux/arm64 --file ./docker/Dockerfile .
+	docker buildx rm alfa
 
 run:
-	#docker run -it -v ${PWD}/certs:/certs -v ${PWD}/config:/config --name cfhookbash sineverba/cfhookbash:latest
-	docker run -it --rm --name cfhookbash sineverba/cfhookbash:latest
+	docker run -it --rm --name cfhookbash sineverba/cfhookbash-dev:$(APP_VERSION)
 
 test:
-	docker run -it --rm --name cfhookbash sineverba/cfhookbash:latest | grep "INFO: Using main config file /app/dehydrated/config"
-	docker run -it --rm --name cfhookbash sineverba/cfhookbash:latest | grep "Registering account"
+	docker run -it --rm --name cfhookbash sineverba/cfhookbash-dev:$(APP_VERSION) | grep "INFO: Using main config file /app/dehydrated/config"
+	docker run -it --rm --name cfhookbash sineverba/cfhookbash-dev:$(APP_VERSION) | grep "Registering account"
 
 inspect:
-	#docker run -it --entrypoint "/bin/bash" -v ${PWD}/certs:/certs -v ${PWD}/config:/config cfhookbash
 	docker run -it --entrypoint "/bin/bash" cfhookbash
 
 destroy:
-	docker image rm sineverba/cfhookbash:latest
+	docker image rm sineverba/cfhookbash-dev:$(APP_VERSION)
