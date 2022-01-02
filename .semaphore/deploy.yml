@@ -4,7 +4,7 @@ name: Build and deploy Pipeline
 agent:
   machine:
     type: e1-standard-2
-    os_image: ubuntu1804
+    os_image: ubuntu2004
 execution_time_limit:
   hours: 3
 
@@ -29,7 +29,7 @@ blocks:
             - checkout
             - docker -v
             - mkdir -vp ~/.docker/cli-plugins/
-            - curl --silent -L "https://github.com/docker/buildx/releases/download/v0.5.1/buildx-v0.5.1.linux-amd64" > ~/.docker/cli-plugins/docker-buildx
+            - curl --silent -L "https://github.com/docker/buildx/releases/download/v0.7.1/buildx-v0.7.1.linux-amd64" > ~/.docker/cli-plugins/docker-buildx
             - chmod a+x ~/.docker/cli-plugins/docker-buildx
             - docker buildx version
             - docker run --rm --privileged multiarch/qemu-user-static --reset -p yes

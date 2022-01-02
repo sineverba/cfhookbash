@@ -1,10 +1,11 @@
-# Next version
+# 4.6.0
 + Fix Cron output
 + Remove Travis and add Circle CI
 + Enable CircleCI
 + Fix documentation
 + Fix CircleCI badge
 + Update license year (yes, this project is alive!)
++ Upgrade dependencies / images
 
 ## 4.5.0
 + Rearrange instructions (for Docker)
