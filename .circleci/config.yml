@@ -2,7 +2,7 @@ version: 2.1
 jobs:
   test:
     docker:
-      - image: cimg/base:2021.03-20.04
+      - image: cimg/base:2021.12
     steps:
       - checkout
       - setup_remote_docker
