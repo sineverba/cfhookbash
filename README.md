@@ -12,7 +12,7 @@ Cloudflare Bash hook for [dehydrated](https://github.com/dehydrated-io/dehydrate
 
 ## Docker version
 
-For Docker version usage, see [wiki](https://github.com/sineverba/cfhookbash/wiki/Docker-usage)
+For [Docker](https://hub.docker.com/r/sineverba/cfhookbash) version usage, see [wiki](https://github.com/sineverba/cfhookbash/wiki/Docker-usage)
 
 
 ## Why Cloudflare? What is this script?
