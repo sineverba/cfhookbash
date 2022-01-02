@@ -1,6 +1,6 @@
-FROM alpine:3.12.3
+FROM alpine:3.15.0
 
-RUN apk add --no-cache bash curl jq openssl --upgrade grep
+RUN apk update && apk upgrade && apk add --no-cache bash curl jq openssl --upgrade grep
 
 RUN mkdir -p dehydrated /app/dehydrated
 
