@@ -7,7 +7,7 @@ jobs:
       - checkout
       - setup_remote_docker
       - run: docker build --tag test-image --file ./docker/Dockerfile .
-      - run: docker run -it --rm --name cfhookbash test-image | grep "Using main config file /app/dehydrated/config"
+      - run: docker run -it --rm --name cfhookbash test-image | grep "INFO: Using main config file /app/dehydrated/config"
       - run: docker run -it --rm --name cfhookbash test-image | grep "Registering account"
 
 workflows:
