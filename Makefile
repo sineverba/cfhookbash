@@ -1,9 +1,11 @@
-APP_VERSION=4.5.0
+APP_VERSION=4.6.0
 BUILDX_VERSION=0.7.1
+IMAGE_NAME=sineverba/cfhookbash-dev
+CONTAINER_NAME=cfhookbash-dev
 
 
 build:
-	docker build --tag sineverba/cfhookbash-dev:$(APP_VERSION) --file ./docker/Dockerfile .
+	docker build --tag $(IMAGE_NAME):$(APP_VERSION) --file ./docker/Dockerfile .
 
 multi:
 	mkdir -vp ~/.docker/cli-plugins/
@@ -12,18 +14,18 @@ multi:
 	docker buildx version
 	docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
 	docker buildx create --name alfa && docker buildx use alfa && docker buildx inspect --bootstrap
-	docker buildx build --tag sineverba/cfhookbash-dev:latest --tag sineverba/cfhookbash-dev:$(APP_VERSION) --platform linux/amd64,linux/armhf,linux/arm64 --file ./docker/Dockerfile .
+	docker buildx build --tag $(IMAGE_NAME):latest --tag $(IMAGE_NAME):$(APP_VERSION) --platform linux/amd64,linux/armhf,linux/arm64 --file ./docker/Dockerfile .
 	docker buildx rm alfa
 
 run:
-	docker run -it --rm --name cfhookbash sineverba/cfhookbash-dev:$(APP_VERSION)
+	docker run -it --rm --name $(CONTAINER_NAME) $(IMAGE_NAME):$(APP_VERSION)
 
 test:
-	docker run -it --rm --name cfhookbash sineverba/cfhookbash-dev:$(APP_VERSION) | grep "INFO: Using main config file /app/dehydrated/config"
-	docker run -it --rm --name cfhookbash sineverba/cfhookbash-dev:$(APP_VERSION) | grep "Registering account"
+	docker run -it --rm --name $(CONTAINER_NAME) $(IMAGE_NAME):$(APP_VERSION) | grep "INFO: Using main config file /app/dehydrated/config"
+	docker run -it --rm --name $(CONTAINER_NAME) $(IMAGE_NAME):$(APP_VERSION) | grep "Registering account"
 
 inspect:
 	docker run -it --entrypoint "/bin/bash" cfhookbash
 
 destroy:
-	docker image rm sineverba/cfhookbash-dev:$(APP_VERSION)
+	docker image rm $(IMAGE_NAME):$(APP_VERSION)

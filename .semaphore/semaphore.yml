@@ -1,6 +1,6 @@
 version: v1.0
 
-name: Build and test Pipeline
+name: Build and test
 agent:
   machine:
     type: e1-standard-2
@@ -29,6 +29,6 @@ blocks:
 
 promotions:
   - name: Deploy
-    pipeline_file: deploy.yml
+    pipeline_file: build-deploy.yml
     auto_promote:
       when: "result = 'passed' and tag =~ '.*'"
