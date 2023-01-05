@@ -1,4 +1,4 @@
-# Next version
+# 4.7.0
 + Improve automations
 + Upgrade dependencies
 
