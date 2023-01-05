@@ -1,5 +1,6 @@
 # Next version
 + Improve automations
++ Upgrade dependencies
 
 ## 4.6.0
 + Fix Cron output
