@@ -1,6 +1,6 @@
 version: v1.0
 
-name: Build and test Pipeline
+name: Build and test
 agent:
   machine:
     type: e1-standard-2
@@ -24,11 +24,12 @@ blocks:
           commands:
             - checkout
             - docker build --tag $DOCKER_USERNAME/$DOCKER_IMAGE --file ./docker/Dockerfile .
+            - docker run -it --rm --entrypoint cat --name cfhookbash $DOCKER_USERNAME/$DOCKER_IMAGE /etc/os-release | grep "Alpine Linux v3.17"
             - docker run -it --rm --name cfhookbash $DOCKER_USERNAME/$DOCKER_IMAGE | grep "Using main config file /app/dehydrated/config"
             - docker run -it --rm --name cfhookbash $DOCKER_USERNAME/$DOCKER_IMAGE | grep "Registering account"
 
 promotions:
   - name: Deploy
-    pipeline_file: deploy.yml
+    pipeline_file: build-deploy.yml
     auto_promote:
       when: "result = 'passed' and tag =~ '.*'"
