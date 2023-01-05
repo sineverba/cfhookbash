@@ -1,6 +1,6 @@
 IMAGE_NAME=sineverba/cfhookbash
 CONTAINER_NAME=cfhookbash
-APP_VERSION=4.6.0-dev
+APP_VERSION=4.7.0-dev
 BUILDX_VERSION=0.9.1
 BINFMT_VERSION=qemu-v7.0.0-28
 
