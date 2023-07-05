@@ -1,4 +1,7 @@
-# 4.7.1
+# 4.8.0
++ Upgrade dependencies
+
+## 4.7.1
 + Fix deploy
 
 ## 4.7.0
