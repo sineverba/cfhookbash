@@ -24,7 +24,8 @@ blocks:
           commands:
             - checkout
             - docker build --tag $DOCKER_USERNAME/$DOCKER_IMAGE --file ./docker/Dockerfile .
-            - docker run -it --rm --entrypoint cat --name cfhookbash $DOCKER_USERNAME/$DOCKER_IMAGE /etc/os-release | grep "Alpine Linux v3.17"
+            - docker run -it --rm --entrypoint cat --name cfhookbash $DOCKER_USERNAME/$DOCKER_IMAGE /etc/os-release | grep "Alpine Linux v3.18"
+            - docker run -it --rm --entrypoint cat --name cfhookbash $DOCKER_USERNAME/$DOCKER_IMAGE /etc/os-release | grep "3.18.2"
             - docker run -it --rm --name cfhookbash $DOCKER_USERNAME/$DOCKER_IMAGE | grep "Using main config file /app/dehydrated/config"
             - docker run -it --rm --name cfhookbash $DOCKER_USERNAME/$DOCKER_IMAGE | grep "Registering account"
 
