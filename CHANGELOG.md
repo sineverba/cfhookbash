@@ -1,4 +1,7 @@
-# 4.8.0
+# Next version
++ Upgrade dependencies
+
+## 4.8.0
 + Upgrade dependencies
 
 ## 4.7.1

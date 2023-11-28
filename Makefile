@@ -1,7 +1,7 @@
 IMAGE_NAME=sineverba/cfhookbash
 CONTAINER_NAME=cfhookbash
 APP_VERSION=4.8.0-dev
-BUILDX_VERSION=0.11.0
+BUILDX_VERSION=0.12.0
 BINFMT_VERSION=qemu-v7.0.0-28
 
 
@@ -24,16 +24,17 @@ multi:
 
 test:
 	docker run --rm -it --entrypoint cat --name $(CONTAINER_NAME) $(IMAGE_NAME):$(APP_VERSION) /etc/os-release | grep "Alpine Linux v3.18"
-	docker run --rm -it --entrypoint cat --name $(CONTAINER_NAME) $(IMAGE_NAME):$(APP_VERSION) /etc/os-release | grep "3.18.2"
+	docker run --rm -it --entrypoint cat --name $(CONTAINER_NAME) $(IMAGE_NAME):$(APP_VERSION) /etc/os-release | grep "3.18.4"
 	docker run -it --rm --name $(CONTAINER_NAME) $(IMAGE_NAME):$(APP_VERSION) | grep "INFO: Using main config file /app/dehydrated/config"
 	docker run -it --rm --name $(CONTAINER_NAME) $(IMAGE_NAME):$(APP_VERSION) | grep "Registering account"
+	docker run -it --rm --entrypoint dehydrated/dehydrated --name $(CONTAINER_NAME) $(IMAGE_NAME):$(APP_VERSION) --version | grep "Dehydrated version: 0.7.2"
 
 spin:
 	docker run -it --rm --name $(CONTAINER_NAME) $(IMAGE_NAME):$(APP_VERSION)
 
 inspect:
-	docker run -it --entrypoint "/bin/bash" cfhookbash
+	docker run -it --entrypoint "/bin/bash" --rm --name $(CONTAINER_NAME) $(IMAGE_NAME):$(APP_VERSION)
 
 destroy:
-	docker image rm alpine:3.18.2
+	docker image rm alpine:3.18.4
 	docker image rm $(IMAGE_NAME):$(APP_VERSION)
