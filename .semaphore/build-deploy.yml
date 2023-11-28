@@ -23,7 +23,7 @@ global_job_config:
     - name: DOCKER_IMAGE
       value: cfhookbash
     - name: BUILDX_VERSION
-      value: 0.11.0
+      value: 0.12.0
     - name: BINFMT_VERSION
       value: qemu-v7.0.0-28
 
