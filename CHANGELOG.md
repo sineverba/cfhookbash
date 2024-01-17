@@ -1,5 +1,6 @@
 # Next version
 + Upgrade dependencies
++ Upgrade dependencies
 
 ## 4.8.0
 + Upgrade dependencies
