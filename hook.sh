@@ -5,6 +5,7 @@ set -o nounset
 shopt -s lastpipe
 
 prefix="_acme-challenge."
+suffix=""
 
 #if [[ ! -f "${PWD}/hooks/cfhookbash/config.sh" ]]; then
 #    if [[ -f "${PWD}/config.sh" ]]; then
@@ -71,7 +72,7 @@ deploy_challenge() {
 
         echo "   - Setting up token for ${DOMAIN}"
 
-        local DATA='{"type":"TXT","name":"'${prefix}${DOMAIN}'","content":"'${TOKEN_VALUE}'","ttl":120,"priority":10,"proxied":false}'
+        local DATA='{"type":"TXT","name":"'${prefix}${DOMAIN}${suffix}'","content":"'${TOKEN_VALUE}'","ttl":120,"priority":10,"proxied":false}'
         curl "${curlParams[@]}" --data "${DATA}" | check_status
         shift 3
     done
@@ -114,7 +115,7 @@ clean_challenge() {
         local DOMAIN="${1}" TOKEN_FILENAME="${2}" TOKEN_VALUE="${3}" curlParams response
         load_config "$DOMAIN" curlParams
 
-        curl "${curlParams[@]}" -G -d 'match=all' -d 'per_page=100' -d 'type=TXT' -d "name=${prefix}${DOMAIN}" | readarray response
+        curl "${curlParams[@]}" -G -d 'match=all' -d 'per_page=100' -d 'type=TXT' -d "name=${prefix}${DOMAIN}${suffix}" | readarray response
         echo "${response[@]}" | check_status
 
         record_ids=$( echo "${response[@]}" | jq -r '.result | .[] | .id' )
